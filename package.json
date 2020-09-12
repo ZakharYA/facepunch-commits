@@ -1,0 +1,29 @@
+{
+	"name": "facepunch-api",
+	"version": "1.0.1",
+	"description": "api from commits.facepunch.com",
+	"main": "src/index.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://gitlab.com/ZakharYA/facepunch-api.git"
+	},
+	"homepage": "https://gitlab.com/ZakharYA/facepunch-api.git",
+	"bugs": "https://gitlab.com/ZakharYA/facepunch-api/-/issues",
+	"author": {
+		"name": "Zakhar (https://vk.com/ghost1337gg)",
+		"email": "zaharsd7@gmail.com"
+	},
+	"license": "MIT",
+	"devDependencies": {
+		"eslint": "^7.8.1"
+	},
+	"dependencies": {
+		"node-fetch": "^2.6.1"
+	},
+	"keywords": [
+		"facepunch",
+		"api",
+		"node",
+		"js"
+	]
+}
