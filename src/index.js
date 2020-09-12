@@ -7,23 +7,41 @@ class _FACEPUNCHAPI {
 	 * @param {Number} interval interval from request to api
 	 */
 	constructor(interval) {
-		this.latestCommit = {};
+		this.latest = {};
 		this.interval = interval;
 
 		this.options = {
-			api: 'https://commits.facepunch.com/r/'
+			api: 'https://commits.facepunch.com/'
 		}
 	}
 
 	/**
 	 * sendRequest
 	 * * send request from api facepunch and get commits
-	 * @param {String} repository name repository to get
+	 * @param {String} type name repository to get
+	 * 0 - repository
+	 * 1 - author
+	 * 2 — comments from a specific author in the repository
+	 * @param {Object|String} name
 	 * @returns return object commits
 	 */
-	async sendRequest(repository) {
+	async sendRequest(type, name) {
+		let urlType = '';
+		switch(type) {
+			case 0:
+				urlType = `${type}/${name}`;
+				break;
+			case 1:
+				urlType = `${name}`;
+				break;
+			case 2:
+				var author = name.author.replace(/\s/g, '');
+				urlType = `${author}/${name.repository}`;
+				break;
+		}
 
-		const request = await fetch(`${this.options.api}${repository}?format=json`);
+
+		const request = await fetch(`${this.options.api}${urlType}?format=json`);
 		const result = await request.json();
 
 		return result.results;
@@ -32,38 +50,71 @@ class _FACEPUNCHAPI {
 	/**
 	 * subscribe
 	 * * subscribe event from repository, call callback function
-	 * @param {String} repository name repository to get
+	 * @param {Number} type name repository to get
+	 * 0 - repository
+	 * 1 - author
+	 * 2 — comments from a specific author in the repository
+	 * @param {Object|String} name what to subscribe to
 	 * @param {Function} callback how to return commit function
 	 */
-	async subscribe(repository, callback) {
-		const request = await this.sendRequest(repository);
-		this.latestCommit[repository] = request[0].id;
+	async subscribe(type, name, callback) {
+		const request = await this.sendRequest(type, name);
+		if (typeof name === 'object') {
+			if (!this.latest['author-repository']) this.latest['author-repository'] = {};
+			if (!this.latest['author-repository'][name.author]) this.latest['author-repository'][name.author] = {};
+			this.latest['author-repository'][name.author][name.repository] = request[0].id;
+		} else {
+			if (!this.latest['name']) this.latest['name'] = {};
+			this.latest['name'][name] = request[0].id;
+		}
 
 		setInterval(async () => {
-			const request = await this.sendRequest(repository);
+			const request = await this.sendRequest(type, name);
 			request.map((e) => {
-				if (e.id <= this.latestCommit[repository]) return;
+				if (typeof name === 'object') {
+					if (e.id <= this.latest['author-repository'][name.author][name.repository]) return;
+				} else {
+					if (e.id <= this.latest['name'][name]) return;
+				}
+
 				callback(e);
 			})
-
-			this.latestCommit[repository] = request[0].id;
+			if (typeof name === 'object') {
+				this.latest['author-repository'][name.author][name.repository] = request[0].id;
+			} else {
+				this.latest['name'][name] = request[0].id;
+			}
 
 		}, this.interval);
 	}
+
+	async subscribeToAuthorRepository(author, repository, callback) {
+		this.subscribe(2, {
+			author,
+			repository
+		}, callback);
+	}
+
+	async subscribeToAuthor(author, callback) {
+		this.subscribe(1, author, callback);
+	}
+
+	async subscribeToRepository(repository, callback) {
+		this.subscribe(0, repository, callback);
+	}
 }
 
-// example, kek :/
 // (() => {
-// 	const facepunchAPI = new _FACEPUNCHAPI(5000);
-
-// 	facepunchAPI.subscribe('SpaceUsurperUnity', (commit) => {
-// 		console.log('Hello Garry! New commit from SpaceUsurperUnity:', commit);
-// 	});
-
-// 	facepunchAPI.subscribe('Garrys Mod', (commit) => {
-// 		console.log('Hello Garry! New commit from Garrys Mod:', commit);
-// 	});
-
+// 	const facepunchAPI = new _FACEPUNCHAPI(60000);
+// 	facepunchAPI.subscribeToAuthorRepository('Ryleigh Kostash', 'SpaceUsurperUnity', (commit) => {
+// 		console.log(commit);
+// 	})
+// 	facepunchAPI.subscribeToRepository('SpaceUsurperUnity', (commit) => {
+// 		console.log(commit);
+// 	})
+// 	facepunchAPI.subscribeToAuthor('Ryleigh Kostash', (commit) => {
+// 		console.log(commit);
+// 	})
 // })();
 
 // export default _FACEPUNCHAPI;
