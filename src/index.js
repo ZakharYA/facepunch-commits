@@ -71,8 +71,10 @@ class _FACEPUNCHAPI {
 
 		setInterval(async () => {
 			const request = await this.sendRequest(type, name);
-			const reversed = request.reverse();
-			reversed.map((e) => {
+
+			request.reverse();
+
+			request.map((e) => {
 				if (typeof name === 'object') {
 					if (e.id <= this.latest['author-repository'][name.author][name.repository]) return;
 				} else {
@@ -81,6 +83,10 @@ class _FACEPUNCHAPI {
 
 				callback(e);
 			})
+
+			request.reverse(); // kek
+
+
 			if (typeof name === 'object') {
 				this.latest['author-repository'][name.author][name.repository] = request[0].id;
 			} else {
