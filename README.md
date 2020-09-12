@@ -30,7 +30,7 @@ subscribeToRepository(repository, callback)
 	* **Description:** The function that will be called with the new commit.
 
 ```js
-facepunchAPI.subscribeToAuthorRepository(author, repository, callback)
+subscribeToAuthorRepository(author, repository, callback)
 ```
 * **Key:** `author`
 	* **Type:** String.
