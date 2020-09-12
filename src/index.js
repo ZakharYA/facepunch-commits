@@ -38,6 +38,7 @@ class _FACEPUNCHAPI {
 				var author = name.author.replace(/\s/g, '');
 				urlType = `${author}/${name.repository}`;
 				break;
+			case 3: break;
 		}
 
 
@@ -118,6 +119,10 @@ class _FACEPUNCHAPI {
 	 */
 	async subscribeToRepository(repository, callback) {
 		this.subscribe(0, repository, callback);
+	}
+
+	async subscribeToAll(callback) {
+		this.subscribe(3, 'all', callback);
 	}
 }
 

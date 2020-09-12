@@ -42,6 +42,13 @@ subscribeToAuthorRepository(author, repository, callback)
 	* **Type:** Function.
 	* **Description:** The function that will be called with the new commit.
 
+```js
+subscribeToAll(callback)
+```
+* **Key:** `callback`
+	* **Type:** Function.
+	* **Description:** The function that will be called with the new commit.
+
 # Example return in callback function
 ```json
 {
@@ -76,6 +83,10 @@ facepunchAPI.subscribeToRepository('sandbox.source', (commit) => {
 
 facepunchAPI.subscribeToAuthorRepository('Garry Newman', 'Fad', (commit) => {
 	console.log('fad?? New commit from Garry in rep Fad', commit);
+})
+
+facepunchAPI.subscribeToAll((commit) => {
+	console.log(`new commit from ${commit.author.name}:`, commit);
 })
 ```
 <a href="https://www.npmjs.com/package/facepunch-api"><img src="https://img.shields.io/npm/v/facepunch-api.svg?style=flat-square" alt="NPM version"></a>
