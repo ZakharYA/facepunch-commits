@@ -5,10 +5,7 @@ npm i facepunch-api
 
 ## Example usage
 ```js
-const _facepunchAPI = require('facepunch-api');
-const facepunchAPI = new _facepunchAPI(5000);
-
-const _FACEPUNCHAPI = require('./src/index');
+const _FACEPUNCHAPI = require('facepunch-api');
 
 const facepunchAPI = new _FACEPUNCHAPI(60000); // interval check commits in ms
 
