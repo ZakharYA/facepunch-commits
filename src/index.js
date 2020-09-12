@@ -63,10 +63,10 @@ class _FACEPUNCHAPI {
 		if (typeof name === 'object') {
 			if (!this.latest['author-repository']) this.latest['author-repository'] = {};
 			if (!this.latest['author-repository'][name.author]) this.latest['author-repository'][name.author] = {};
-			this.latest['author-repository'][name.author][name.repository] = request[0].id - 5000;
+			this.latest['author-repository'][name.author][name.repository] = request[0].id;
 		} else {
 			if (!this.latest['name']) this.latest['name'] = {};
-			this.latest['name'][name] = request[0].id - 5000;
+			this.latest['name'][name] = request[0].id;
 		}
 
 		setInterval(async () => {
