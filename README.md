@@ -1,6 +1,61 @@
+<div style="text-align: center;"><img src="https://commits.facepunch.com/logo.svg"></div>
+This library allows you to subscribe to commits from [commits](https://commits.facepunch.com)
+
+## Documentation
+
 ### NPM
 ```
 npm i facepunch-api
+```
+
+## Functions
+```js
+subscribeToAuthor(author, callback)
+```
+* **Key:** `author`
+	* **Type:** String.
+	* **Description:** Name of the author to subscribe to.
+* **Key:** `callback`
+	* **Type:** Function.
+	* **Description:** The function that will be called with the new commit.
+
+```js
+subscribeToRepository(repository, callback)
+```
+* **Key:** `repository`
+	* **Type:** String.
+	* **Description:** Name of the repository to subscribe to.
+* **Key:** `callback`
+	* **Type:** Function.
+	* **Description:** The function that will be called with the new commit.
+
+```js
+facepunchAPI.subscribeToAuthorRepository(author, repository, callback)
+```
+* **Key:** `author`
+	* **Type:** String.
+	* **Description:** Name of the author to subscribe to.
+* **Key:** `repository`
+	* **Type:** String.
+	* **Description:** Name of the repository to subscribe to.
+* **Key:** `callback`
+	* **Type:** Function.
+	* **Description:** The function that will be called with the new commit.
+
+# Example return in callback function
+```json
+{
+      "id": 372193,
+      "repo": "rust_reboot",
+      "branch": "main/ai_test_changes/events",
+      "changeset": "54530",
+      "created": "2020-09-12T10:44:02",
+      "message": "wip AI state events & listener.",
+      "user": {
+        "name": "Adam Woolridge",
+        "avatar": "https://files.facepunch.com/s/b8ec968c721a.jpg"
+      }
+}
 ```
 
 ## Example usage
