@@ -86,7 +86,7 @@ facepunchAPI.subscribeToAuthorRepository('Garry Newman', 'Fad', (commit) => {
 })
 
 facepunchAPI.subscribeToAll((commit) => {
-	console.log(`new commit from ${commit.author.name}:`, commit);
+	console.log(`new commit from ${commit.user.name}:`, commit);
 })
 ```
 <a href="https://www.npmjs.com/package/facepunch-api"><img src="https://img.shields.io/npm/v/facepunch-api.svg?style=flat-square" alt="NPM version"></a>
