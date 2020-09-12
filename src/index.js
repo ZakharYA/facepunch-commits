@@ -88,6 +88,12 @@ class _FACEPUNCHAPI {
 		}, this.interval);
 	}
 
+	/**
+	 * subscribeToAuthorRepository
+	 * @param {String} author author to subscribe
+	 * @param {String} repository repository to subscribe
+	 * @param {Function} callback how to return new commit
+	 */
 	async subscribeToAuthorRepository(author, repository, callback) {
 		this.subscribe(2, {
 			author,
@@ -95,10 +101,20 @@ class _FACEPUNCHAPI {
 		}, callback);
 	}
 
+	/**
+	 * subscribeToAuthor
+	 * @param {String} author author to subscribe
+	 * @param {Function} callback how to return new commit
+	 */
 	async subscribeToAuthor(author, callback) {
 		this.subscribe(1, author, callback);
 	}
 
+	/**
+	 * subscribeToRepository
+	 * @param {String} author repository to subscribe
+	 * @param {Function} callback how to return new commit
+	 */
 	async subscribeToRepository(repository, callback) {
 		this.subscribe(0, repository, callback);
 	}
