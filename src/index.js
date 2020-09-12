@@ -37,7 +37,7 @@ class _FACEPUNCHAPI {
 	 */
 	async subscribe(repository, callback) {
 		const request = await this.sendRequest(repository);
-		this.latestCommit[repository] = request[0].id - 1;
+		this.latestCommit[repository] = request[0].id;
 
 		setInterval(async () => {
 			const request = await this.sendRequest(repository);
