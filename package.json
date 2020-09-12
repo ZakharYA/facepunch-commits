@@ -1,6 +1,6 @@
 {
 	"name": "facepunch-api",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "api from commits.facepunch.com",
 	"main": "src/index.js",
 	"repository": {
