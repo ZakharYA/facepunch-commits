@@ -29,7 +29,7 @@ class _FACEPUNCHAPI {
 		let urlType = '';
 		switch(type) {
 			case 0:
-				urlType = `${type}/${name}`;
+				urlType = `r/${name}`;
 				break;
 			case 1:
 				urlType = `${name}`;
