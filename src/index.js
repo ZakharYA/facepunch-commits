@@ -43,9 +43,12 @@ class _FACEPUNCHAPI {
 
 
 		const request = await fetch(`${this.options.api}${urlType}?format=json`);
-		const result = await request.json();
 
-		return result.results;
+		try {
+			return await request.json().results;
+		} catch {
+			return { 'error': true }
+		}
 	}
 
 	/**
@@ -58,8 +61,12 @@ class _FACEPUNCHAPI {
 	 * @param {Object|String} name what to subscribe to
 	 * @param {Function} callback how to return commit function
 	 */
-	async subscribe(type, name, callback) {
+	async subscribe(type, name, callback, err) {
 		const request = await this.sendRequest(type, name);
+
+		// if (request.error && err) return err();
+		if (request.error) return;
+
 		if (typeof name === 'object') {
 			if (!this.latest['author-repository']) this.latest['author-repository'] = {};
 			if (!this.latest['author-repository'][name.author]) this.latest['author-repository'][name.author] = {};
