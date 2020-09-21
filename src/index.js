@@ -72,19 +72,29 @@ class _FACEPUNCHAPI {
 		setInterval(async () => {
 			const request = await this.sendRequest(type, name);
 
-			request.reverse();
+			// request.reverse();
+
+			let finded = false;
+			const data = [];
 
 			request.map((e) => {
 				if (typeof name === 'object') {
-					if (e.id <= this.latest['author-repository'][name.author][name.repository]) return;
+					if (e.id === this.latest['author-repository'][name.author][name.repository]) finded = true;
 				} else {
-					if (e.id <= this.latest['name'][name]) return;
+					if (e.id === this.latest['name'][name]) finded = true;
 				}
 
-				callback(e);
+				if (finded) return;
+
+				data.push(e);
+
+				// callback(e);
 			})
 
-			request.reverse(); // kek
+			data.reverse();
+			data.map((e) => callback(e));
+
+			//request.reverse(); // kek
 
 
 			if (typeof name === 'object') {
