@@ -59,13 +59,13 @@ class _FACEPUNCHAPI {
 	 * 0 - repository
 	 * 1 - author
 	 * 2 — comments from a specific author in the repository
+	 * 3 — subscribe to all
 	 * @param {Object|String} name what to subscribe to
 	 * @param {Function} callback how to return commit function
 	 */
-	async subscribe(type, name, callback, err) {
+	async subscribe(type, name, callback) {
 		const request = await this.sendRequest(type, name);
 
-		// if (request.error && err) return err();
 		if (request.error) return;
 
 		if (typeof name === 'object') {
@@ -80,30 +80,23 @@ class _FACEPUNCHAPI {
 		setInterval(async () => {
 			const request = await this.sendRequest(type, name);
 
-			// request.reverse();
-
-			let finded = false;
+			let found = false;
 			const data = [];
 
 			request.map((e) => {
 				if (typeof name === 'object') {
-					if (e.id === this.latest['author-repository'][name.author][name.repository]) finded = true;
+					if (e.id === this.latest['author-repository'][name.author][name.repository]) found = true;
 				} else {
-					if (e.id === this.latest['name'][name]) finded = true;
+					if (e.id === this.latest['name'][name]) found = true;
 				}
 
-				if (finded) return;
+				if (found) return;
 
 				data.push(e);
-
-				// callback(e);
 			})
 
 			data.reverse();
 			data.map((e) => callback(e));
-
-			//request.reverse(); // kek
-
 
 			if (typeof name === 'object') {
 				this.latest['author-repository'][name.author][name.repository] = request[0].id;
@@ -116,6 +109,8 @@ class _FACEPUNCHAPI {
 
 	/**
 	 * subscribeToAuthorRepository
+	 * * Subscribes to the commits of a specific author and repository
+	 * * example: https://commits.facepunch.com/billford/rust_reboot
 	 * @param {String} author author to subscribe
 	 * @param {String} repository repository to subscribe
 	 * @param {Function} callback how to return new commit
@@ -129,6 +124,7 @@ class _FACEPUNCHAPI {
 
 	/**
 	 * subscribeToAuthor
+	 * * Subscribes to the communes of a specific author
 	 * @param {String} author author to subscribe
 	 * @param {Function} callback how to return new commit
 	 */
@@ -138,6 +134,7 @@ class _FACEPUNCHAPI {
 
 	/**
 	 * subscribeToRepository
+	 * * Subscribes to the commits of a specific repository
 	 * @param {String} author repository to subscribe
 	 * @param {Function} callback how to return new commit
 	 */
@@ -145,24 +142,14 @@ class _FACEPUNCHAPI {
 		this.subscribe(0, repository, callback);
 	}
 
+	/**
+	 * subscribeToAll
+	 * * Subscribe to all commits
+	 * @param {Function} callback how to return new commit
+	 */
 	async subscribeToAll(callback) {
 		this.subscribe(3, 'all', callback);
 	}
 }
-
-// (() => {
-// 	const facepunchAPI = new _FACEPUNCHAPI(60000);
-// 	facepunchAPI.subscribeToAuthorRepository('Ryleigh Kostash', 'SpaceUsurperUnity', (commit) => {
-// 		console.log(commit);
-// 	})
-// 	facepunchAPI.subscribeToRepository('SpaceUsurperUnity', (commit) => {
-// 		console.log(commit);
-// 	})
-// 	facepunchAPI.subscribeToAuthor('Ryleigh Kostash', (commit) => {
-// 		console.log(commit);
-// 	})
-// })();
-
-// export default _FACEPUNCHAPI;
 
 module.exports = _FACEPUNCHAPI;
