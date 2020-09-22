@@ -45,7 +45,8 @@ class _FACEPUNCHAPI {
 		const request = await fetch(`${this.options.api}${urlType}?format=json`);
 
 		try {
-			return await request.json().results;
+			let data = await request.json()
+			return data.results;
 		} catch {
 			return { 'error': true }
 		}
