@@ -157,7 +157,7 @@ class _FACEPUNCHAPI {
 	 * @return {void}
 	 */
 	subscribeToAll(callback) {
-		this.subscribe(3, 'all', callback);
+		this.subscribe(3, null, callback);
 	}
 }
 
