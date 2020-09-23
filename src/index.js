@@ -80,6 +80,8 @@ class _FACEPUNCHAPI {
 		setInterval(async () => {
 			const request = await this.sendRequest(type, name);
 
+			if (request.error) return;
+
 			let found = false;
 			const data = [];
 
