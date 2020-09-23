@@ -37,8 +37,8 @@ class _FACEPUNCHAPI {
 				urlType = `${name}`;
 				break;
 			case 2:
-				author = name.author.replace(/\s/g, '');
-				urlType = `${author}/${name.repository}`;
+				author = name['author'].replace(/\s/g, '');
+				urlType = `${author}/${name['repository']}`;
 				break;
 			case 3:
 				break;
