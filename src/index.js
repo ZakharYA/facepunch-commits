@@ -21,6 +21,7 @@ class _FACEPUNCHAPI {
 	 * 0 - repository
 	 * 1 - author
 	 * 2 — comments from a specific author in the repository
+	 * 3 — subscribe to all
 	 * @param {Object|String} name
 	 * @return {Object}
 	 */
