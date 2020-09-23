@@ -1,4 +1,3 @@
-// import fetch from 'node-fetch';
 const fetch = require('node-fetch');
 
 class _FACEPUNCHAPI {
@@ -18,16 +17,18 @@ class _FACEPUNCHAPI {
 	/**
 	 * sendRequest
 	 * * send request from api facepunch and get commits
-	 * @param {String} type name repository to get
+	 * @param {Number} type name repository to get
 	 * 0 - repository
 	 * 1 - author
 	 * 2 — comments from a specific author in the repository
 	 * @param {Object|String} name
-	 * @returns return object commits
+	 * @return {Object}
 	 */
 	async sendRequest(type, name) {
 		let urlType = '';
-		switch(type) {
+		let author;
+
+		switch (type) {
 			case 0:
 				urlType = `r/${name}`;
 				break;
@@ -35,10 +36,11 @@ class _FACEPUNCHAPI {
 				urlType = `${name}`;
 				break;
 			case 2:
-				var author = name.author.replace(/\s/g, '');
+				author = name.author.replace(/\s/g, '');
 				urlType = `${author}/${name.repository}`;
 				break;
-			case 3: break;
+			case 3:
+				break;
 		}
 
 
@@ -48,7 +50,7 @@ class _FACEPUNCHAPI {
 			let data = await request.json()
 			return data.results;
 		} catch {
-			return { 'error': true }
+			return {'error': true};
 		}
 	}
 
@@ -62,6 +64,7 @@ class _FACEPUNCHAPI {
 	 * 3 — subscribe to all
 	 * @param {Object|String} name what to subscribe to
 	 * @param {Function} callback how to return commit function
+	 * @return {void}
 	 */
 	async subscribe(type, name, callback) {
 		const request = await this.sendRequest(type, name);
@@ -116,8 +119,9 @@ class _FACEPUNCHAPI {
 	 * @param {String} author author to subscribe
 	 * @param {String} repository repository to subscribe
 	 * @param {Function} callback how to return new commit
+	 * @return {void}
 	 */
-	async subscribeToAuthorRepository(author, repository, callback) {
+	subscribeToAuthorRepository(author, repository, callback) {
 		this.subscribe(2, {
 			author,
 			repository
@@ -129,18 +133,20 @@ class _FACEPUNCHAPI {
 	 * * Subscribes to the communes of a specific author
 	 * @param {String} author author to subscribe
 	 * @param {Function} callback how to return new commit
+	 * @return {void}
 	 */
-	async subscribeToAuthor(author, callback) {
+	subscribeToAuthor(author, callback) {
 		this.subscribe(1, author, callback);
 	}
 
 	/**
 	 * subscribeToRepository
 	 * * Subscribes to the commits of a specific repository
-	 * @param {String} author repository to subscribe
+	 * @param {String} repository repository to subscribe
 	 * @param {Function} callback how to return new commit
+	 * @return {void}
 	 */
-	async subscribeToRepository(repository, callback) {
+	subscribeToRepository(repository, callback) {
 		this.subscribe(0, repository, callback);
 	}
 
@@ -148,8 +154,9 @@ class _FACEPUNCHAPI {
 	 * subscribeToAll
 	 * * Subscribe to all commits
 	 * @param {Function} callback how to return new commit
+	 * @return {void}
 	 */
-	async subscribeToAll(callback) {
+	subscribeToAll(callback) {
 		this.subscribe(3, 'all', callback);
 	}
 }
