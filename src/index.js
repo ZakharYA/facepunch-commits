@@ -90,7 +90,7 @@ class _FACEPUNCHAPI {
 			const data = [];
 
 			request.map((e) => {
-				if (typeof name === 'object') {
+				if (typeof name === 'object' && name !== null) {
 					if (e.id === this.latest['author-repository'][name.author][name.repository]) found = true;
 				} else {
 					if (e.id === this.latest['name'][name]) found = true;
@@ -104,7 +104,7 @@ class _FACEPUNCHAPI {
 			data.reverse();
 			data.map((e) => callback(e));
 
-			if (typeof name === 'object') {
+			if (typeof name === 'object' && name !== null) {
 				this.latest['author-repository'][name.author][name.repository] = request[0].id;
 			} else {
 				this.latest['name'][name] = request[0].id;
