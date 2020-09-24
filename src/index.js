@@ -72,7 +72,7 @@ class _FACEPUNCHAPI {
 
 		if (request.error) return;
 
-		if (typeof name === 'object') {
+		if (typeof name === 'object' && name !== null) {
 			if (!this.latest['author-repository']) this.latest['author-repository'] = {};
 			if (!this.latest['author-repository'][name.author]) this.latest['author-repository'][name.author] = {};
 			this.latest['author-repository'][name.author][name.repository] = request[0].id;
