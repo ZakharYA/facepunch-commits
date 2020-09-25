@@ -12,6 +12,8 @@ class _FACEPUNCHAPI {
 		this.options = {
 			api: 'https://commits.facepunch.com/'
 		}
+
+		this.errorFunction = undefined;
 	}
 
 	/**
@@ -51,6 +53,8 @@ class _FACEPUNCHAPI {
 			let data = await request.json()
 			return data.results;
 		} catch {
+			if (this.errorFunction !== undefined) this.errorFunction(request);
+
 			return {'error': true};
 		}
 	}
@@ -70,8 +74,6 @@ class _FACEPUNCHAPI {
 	async subscribe(type, name, callback) {
 		const request = await this.sendRequest(type, name);
 
-		if (request.error) return;
-
 		if (typeof name === 'object' && name !== null) {
 			if (!this.latest['author-repository']) this.latest['author-repository'] = {};
 			if (!this.latest['author-repository'][name.author]) this.latest['author-repository'][name.author] = {};
@@ -83,8 +85,6 @@ class _FACEPUNCHAPI {
 
 		setInterval(async () => {
 			const request = await this.sendRequest(type, name);
-
-			if (request.error) return;
 
 			let found = false;
 			const data = [];
@@ -159,6 +159,16 @@ class _FACEPUNCHAPI {
 	 */
 	subscribeToAll(callback) {
 		this.subscribe(3, null, callback);
+	}
+
+	/**
+	 * throwError
+	 * * Your callback function will be called if the fetch query fails
+	 * @param callback
+	 * @return {void}
+	 */
+	throwError(callback) {
+		this.errorFunction = callback;
 	}
 }
 

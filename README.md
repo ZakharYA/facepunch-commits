@@ -1,4 +1,4 @@
-<div style="text-align: center;"><img src="https://commits.facepunch.com/logo.svg"></div>
+<div style="text-align: center;"><img src="https://commits.facepunch.com/logo.svg" alt="facepunch logo"></div>
 This library allows you to subscribe to commits from [commits](https://commits.facepunch.com)
 
 ## Documentation
@@ -49,6 +49,14 @@ subscribeToAll(callback)
 	* **Type:** Function.
 	* **Description:** The function that will be called with the new commit.
 
+```js
+throwError(callback)
+```
+* **Key:** `callback`
+	* **Type:** Function.
+    * **Description:** Where mistakes will arrive
+
+
 # Example return in callback function
 ```json
 {
@@ -87,6 +95,10 @@ facepunchAPI.subscribeToAuthorRepository('Garry Newman', 'Fad', (commit) => {
 
 facepunchAPI.subscribeToAll((commit) => {
 	console.log(`new commit from ${commit.user.name}:`, commit);
+})
+
+facepunchAPI.throwError((_err) => {
+	console.log('Oh... Site down!');
 })
 ```
 <a href="https://www.npmjs.com/package/facepunch-api"><img src="https://img.shields.io/npm/v/facepunch-api.svg?style=flat-square" alt="NPM version"></a>
