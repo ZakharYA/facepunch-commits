@@ -74,6 +74,8 @@ class _FACEPUNCHAPI {
 	async subscribe(type, name, callback) {
 		const request = await this.sendRequest(type, name);
 
+		if (request.error) return;
+
 		if (typeof name === 'object' && name !== null) {
 			if (!this.latest['author-repository']) this.latest['author-repository'] = {};
 			if (!this.latest['author-repository'][name.author]) this.latest['author-repository'][name.author] = {};
@@ -85,6 +87,8 @@ class _FACEPUNCHAPI {
 
 		setInterval(async () => {
 			const request = await this.sendRequest(type, name);
+
+			if (request.error) return;
 
 			let found = false;
 			const data = [];
