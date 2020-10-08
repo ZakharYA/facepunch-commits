@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-class _FACEPUNCHAPI {
+class _FACEPUNCHCOMMITS {
 	/**
 	 * constructor
 	 * @param {Number} interval interval from request to api
@@ -10,7 +10,7 @@ class _FACEPUNCHAPI {
 		this.interval = interval;
 
 		this.options = {
-			api: 'https://commits.facepunch.com/'
+			url: 'https://commits.facepunch.com/'
 		}
 
 		this.errorFunction = undefined;
@@ -47,7 +47,7 @@ class _FACEPUNCHAPI {
 		}
 
 
-		const request = await fetch(`${this.options.api}${urlType}?format=json`);
+		const request = await fetch(`${this.options.url}${urlType}?format=json`);
 
 		try {
 			let data = await request.json()
@@ -176,4 +176,4 @@ class _FACEPUNCHAPI {
 	}
 }
 
-module.exports = _FACEPUNCHAPI;
+module.exports = _FACEPUNCHCOMMITS;

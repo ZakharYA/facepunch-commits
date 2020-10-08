@@ -5,7 +5,7 @@ This library allows you to subscribe to commits from [commits](https://commits.f
 
 ### NPM
 ```
-npm i facepunch-api
+npm i facepunch-commits
 ```
 
 ## Functions
@@ -75,31 +75,31 @@ throwError(callback)
 
 ## Example usage
 ```js
-const _FACEPUNCHAPI = require('facepunch-api');
+const _FACEPUNCHCOMMITS = require('facepunch-commits');
 
-const facepunchAPI = new _FACEPUNCHAPI(60000); // interval check commits in ms
+const commits = new _FACEPUNCHCOMMITS(60000); // interval check commits in ms
 
-facepunchAPI.subscribeToAuthor('Garry Newman', (commit) => {
+commits.subscribeToAuthor('Garry Newman', (commit) => {
 	// Here we subscribe to commits from author Garry Newman
 	console.log('Ohh... New commit from Garry!!!', commit);
 })
 
-facepunchAPI.subscribeToRepository('sandbox.source', (commit) => {
+commits.subscribeToRepository('sandbox.source', (commit) => {
 	// Here we subscribe to the comments on the repository sandbox.source
 	console.log('O yes. S&Box released', commit);
 })
 
-facepunchAPI.subscribeToAuthorRepository('Garry Newman', 'Fad', (commit) => {
+commits.subscribeToAuthorRepository('Garry Newman', 'Fad', (commit) => {
 	console.log('fad?? New commit from Garry in rep Fad', commit);
 })
 
-facepunchAPI.subscribeToAll((commit) => {
+commits.subscribeToAll((commit) => {
 	console.log(`new commit from ${commit.user.name}:`, commit);
 })
 
-facepunchAPI.throwError((_err) => {
+commits.throwError((_err) => {
 	console.log('Oh... Site down!');
 })
 ```
-<a href="https://www.npmjs.com/package/facepunch-api"><img src="https://img.shields.io/npm/v/facepunch-api.svg?style=flat-square" alt="NPM version"></a>
+<a href="https://www.npmjs.com/package/facepunch-commits"><img src="https://img.shields.io/npm/v/facepunch-commits.svg?style=flat-square" alt="NPM version"></a>
 <a href="https://vk.com/ghost1337gg"><img src="https://brand.vkforms.ru/static/media/logo_color_154.08f6e176.svg" height=20></a>
