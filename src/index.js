@@ -13,7 +13,7 @@ class _FACEPUNCHCOMMITS {
 			url: 'https://commits.facepunch.com/'
 		}
 
-		this.errorFunction = undefined;
+		this.statusFunction = undefined;
 	}
 
 	/**
@@ -47,16 +47,18 @@ class _FACEPUNCHCOMMITS {
 		}
 
 
-		const request = await fetch(`${this.options.url}${urlType}?format=json`);
+		return await fetch(`${this.options.url}${urlType}?format=json`)
+			.then((response) => response.json())
+			.then((response) => {
+				if (this.statusFunction !== undefined) this.statusFunction(true);
 
-		try {
-			let data = await request.json()
-			return data.results;
-		} catch {
-			if (this.errorFunction !== undefined) this.errorFunction(request);
+				return response.results;
+			})
+			.catch((error) => {
+				if (this.statusFunction !== undefined) this.statusFunction(false, error);
 
-			return {'error': true};
-		}
+				return {'error': true};
+			})
 	}
 
 	/**
@@ -166,13 +168,13 @@ class _FACEPUNCHCOMMITS {
 	}
 
 	/**
-	 * throwError
-	 * * Your callback function will be called if the fetch query fails
-	 * @param callback
+	 * status
+	 * * Your callback function will be called if the fetch query success/false
+	 * @param callback Return 1 args true - success response, or false - failed request. 2 args return error fetch if failed request
 	 * @return {void}
 	 */
-	throwError(callback) {
-		this.errorFunction = callback;
+	status(callback) {
+		this.statusFunction = callback;
 	}
 }
 

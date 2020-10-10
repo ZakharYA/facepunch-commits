@@ -50,11 +50,11 @@ subscribeToAll(callback)
 	* **Description:** The function that will be called with the new commit.
 
 ```js
-throwError(callback)
+status(callback)
 ```
 * **Key:** `callback`
 	* **Type:** Function.
-    * **Description:** Where mistakes will arrive
+    * **Description:** Called when a request has occurred. Returns true in 1 args if the query succeeds or false if the query fails
 
 
 # Example return in callback function
@@ -97,8 +97,8 @@ commits.subscribeToAll((commit) => {
 	console.log(`new commit from ${commit.user.name}:`, commit);
 })
 
-commits.throwError((_err) => {
-	console.log('Oh... Site down!');
+commits.status((status) => {
+	console.log(status ? 'The site is running!' : 'Site is down');
 })
 ```
 <a href="https://www.npmjs.com/package/facepunch-commits"><img src="https://img.shields.io/npm/v/facepunch-commits.svg?style=flat-square" alt="NPM version"></a>
