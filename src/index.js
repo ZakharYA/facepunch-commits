@@ -14,6 +14,7 @@ class _FACEPUNCHCOMMITS {
 		}
 
 		this.statusFunction = undefined;
+		this.fail = false;
 	}
 
 	/**
@@ -28,6 +29,7 @@ class _FACEPUNCHCOMMITS {
 	 * @return {Object}
 	 */
 	async sendRequest(type, name) {
+
 		let urlType = '';
 		let author;
 
@@ -46,16 +48,26 @@ class _FACEPUNCHCOMMITS {
 				break;
 		}
 
-
 		return await fetch(`${this.options.url}${urlType}?format=json`)
 			.then((response) => response.json())
 			.then((response) => {
+				if (this.fail) return {'error': true};
+
 				if (this.statusFunction !== undefined) this.statusFunction(true);
 
 				return response.results;
 			})
 			.catch((error) => {
-				if (this.statusFunction !== undefined) this.statusFunction(false, error);
+				if (this.fail) return {'error': true};
+
+				if (this.statusFunction !== undefined) {
+					this.statusFunction(false, error);
+					this.fail = true;
+
+					setTimeout(() => {
+						this.fail = false;
+					}, 60000 * 5);
+				}
 
 				return {'error': true};
 			})
