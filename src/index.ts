@@ -137,4 +137,4 @@ class FacepunchCommits {
 	}
 }
 
-export default FacepunchCommits;
+export = FacepunchCommits;
