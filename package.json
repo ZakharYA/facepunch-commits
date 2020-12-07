@@ -1,6 +1,6 @@
 {
 	"name": "facepunch-commits",
-	"version": "2.0.1",
+	"version": "2.0.3",
 	"description": "parser commits from commits.facepunch.com",
 	"main": "dist/index.js",
 	"repository": {
@@ -17,7 +17,7 @@
 		"name": "Zakhar (https://vk.com/ghost1337gg)",
 		"email": "zaharsd7@gmail.com"
 	},
-	"types": "index.d.ts",
+	"types": "dist/index.d.ts",
 	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^14.14.10",
@@ -28,6 +28,7 @@
 		"typescript": "^4.1.2"
 	},
 	"dependencies": {
+		"ajv": "^6.12.6",
 		"node-fetch": "^2.6.1"
 	},
 	"keywords": [
