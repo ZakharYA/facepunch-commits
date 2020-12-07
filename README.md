@@ -10,9 +10,9 @@ npm i facepunch-commits
 
 ## Functions
 ```js
-subscribeToAuthor(author, callback)
+subscribeToAuthor(name, callback)
 ```
-* **Key:** `author`
+* **Key:** `name`
 	* **Type:** String.
 	* **Description:** Name of the author to subscribe to.
 * **Key:** `callback`
@@ -20,9 +20,9 @@ subscribeToAuthor(author, callback)
 	* **Description:** The function that will be called with the new commit.
 
 ```js
-subscribeToRepository(repository, callback)
+subscribeToRepository(name, callback)
 ```
-* **Key:** `repository`
+* **Key:** `name`
 	* **Type:** String.
 	* **Description:** Name of the repository to subscribe to.
 * **Key:** `callback`
@@ -30,12 +30,12 @@ subscribeToRepository(repository, callback)
 	* **Description:** The function that will be called with the new commit.
 
 ```js
-subscribeToAuthorRepository(author, repository, callback)
+subscribeToAuthorRepository(authorName, repositoryName, callback)
 ```
-* **Key:** `author`
+* **Key:** `authorName`
 	* **Type:** String.
 	* **Description:** Name of the author to subscribe to.
-* **Key:** `repository`
+* **Key:** `repositoryName`
 	* **Type:** String.
 	* **Description:** Name of the repository to subscribe to.
 * **Key:** `callback`
@@ -50,11 +50,11 @@ subscribeToAll(callback)
 	* **Description:** The function that will be called with the new commit.
 
 ```js
-status(callback)
+catchRequest(callback)
 ```
 * **Key:** `callback`
 	* **Type:** Function.
-    * **Description:** Called when a request has occurred. Returns true in 1 args if the query succeeds or false if the query fails
+    * **Description:** Called when a request has occurred. Return error
 
 
 # Example return in callback function
@@ -75,9 +75,9 @@ status(callback)
 
 ## Example usage
 ```js
-const _FACEPUNCHCOMMITS = require('facepunch-commits');
+const FacepunchCommits = require('facepunch-commits');
 
-const commits = new _FACEPUNCHCOMMITS(60000); // interval check commits in ms
+const commits = new FacepunchCommits(60000); // interval check commits in ms
 
 commits.subscribeToAuthor('Garry Newman', (commit) => {
 	// Here we subscribe to commits from author Garry Newman
@@ -97,8 +97,8 @@ commits.subscribeToAll((commit) => {
 	console.log(`new commit from ${commit.user.name}:`, commit);
 })
 
-commits.status((status) => {
-	console.log(status ? 'The site is running!' : 'Site is down');
+commits.catchRequest((err) => {
+	console.log('new error', err);
 })
 ```
 <a href="https://www.npmjs.com/package/facepunch-commits"><img src="https://img.shields.io/npm/v/facepunch-commits.svg?style=flat-square" alt="NPM version"></a>
