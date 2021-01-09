@@ -73,20 +73,35 @@ catchRequest(callback)
 }
 ```
 
+### Callback also has additional features
+```js
+isHide()
+```
+* **Type:** Function.
+	* **Description:** Checks whether the switch is hidden. (blues with symbols)
+	* **Return:** boolean
+
+```js
+toUnixTime()
+```
+* **Type:** Function.
+	* **Description:** Convects date in unixtime
+	* **Return:** number
+
 ## Example usage
 ```js
 const FacepunchCommits = require('facepunch-commits');
 
-const commits = new FacepunchCommits(60000); // interval check commits in ms
+const commits = new FacepunchCommits(15000); // interval check commits in ms
 
 commits.subscribeToAuthor('Garry Newman', (commit) => {
 	// Here we subscribe to commits from author Garry Newman
 	console.log('Ohh... New commit from Garry!!!', commit);
 })
 
-commits.subscribeToRepository('sandbox.source', (commit) => {
+commits.subscribeToRepository('sbox', (commit) => {
 	// Here we subscribe to the comments on the repository sandbox.source
-	console.log('O yes. S&Box released', commit);
+	console.log(commit.isHide() ? 'Ohh, is hide. fuck....' : commit.message);
 })
 
 commits.subscribeToAuthorRepository('Garry Newman', 'Fad', (commit) => {
