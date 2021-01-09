@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import CommitsValidate, { CommitsResponse } from './types/CommitsResponse.validator';
-import { Commit } from './types/CommitsResponse';
+import { ICommit } from './types/CommitsResponse';
+import customFunctions from './customFunctions';
 
 class FacepunchCommits {
 	options: {
@@ -11,16 +12,16 @@ class FacepunchCommits {
 	latestCommit: {
 		[key: string]: number;
 	}
-	errorHandler: ((error: any) => void) | undefined;
-	hasError: boolean
+	errorHandler: ((error: Error) => void) | undefined;
+	hasError: boolean;
 
 	/**
-	 * @param interval - how often new commits will be checked(milliseconds)
+	 * @param interval - how often new commits will be checked(milliseconds) (Default 1 min)
 	 * @param intervalError - How many times will the request be in case of an error(milliseconds)(Default 5 min)
 	 */
-	constructor(interval : number, intervalError?: number) {
+	constructor(interval? : number, intervalError?: number) {
 		this.options = {
-			interval,
+			interval: interval || 60000,
 			intervalError: intervalError || 60000 * 5,
 			url: 'https://commits.facepunch.com/',
 		};
@@ -42,13 +43,10 @@ class FacepunchCommits {
 			.then((result) => {
 				if (!('results' in result)) throw result;
 
-				CommitsValidate(result); // throw called
+				CommitsValidate(result);
 
 				return result.results;
-			})
-			.catch((err: Error) => {
-				throw err;
-			})
+			});
 	}
 
 	/**
@@ -56,7 +54,7 @@ class FacepunchCommits {
 	 * @param params - Advanced Options in url
 	 * @param callback - return commit
 	 */
-	subscribe(params: string, callback: (arg0: Commit) => void) : void {
+	subscribe(params: string, callback: (commit: ICommit) => void) : void {
 		setInterval(() => {
 			if (this.hasError) return;
 
@@ -69,10 +67,14 @@ class FacepunchCommits {
 
 					if (result[0].id === this.latestCommit[params]) return;
 
-					const data: Commit[] = [];
+					const data: ICommit[] = [];
 
 					for (let i = 0; i < result.length; i++) {
 						if (result[i].id === this.latestCommit[params]) break;
+
+						Object.values(customFunctions).forEach(value => {
+							Object.defineProperty(result[i], value.name, { get: () => value });
+						});
 
 						data.push(result[i]);
 					}
@@ -90,7 +92,7 @@ class FacepunchCommits {
 
 					if (this.errorHandler) return this.errorHandler(err);
 					throw err;
-				})
+				});
 		}, this.options.interval);
 	}
 
@@ -99,7 +101,7 @@ class FacepunchCommits {
 	 * @param name repository to subscribe
 	 * @param callback callback how to return new commit
 	 */
-	subscribeToRepository(name: string, callback: (arg0: Commit) => void) : void {
+	subscribeToRepository(name: string, callback: (commit: ICommit) => void) : void {
 		this.subscribe(`r/${name}`, callback);
 	}
 
@@ -108,7 +110,7 @@ class FacepunchCommits {
 	 * @param authorName author to subscribe
 	 * @param  callback how to return new commit
 	 */
-	subscribeToAuthor(authorName: string, callback: (arg0: Commit) => void) : void {
+	subscribeToAuthor(authorName: string, callback: (commit: ICommit) => void) : void {
 		this.subscribe(authorName, callback);
 	}
 
@@ -119,7 +121,7 @@ class FacepunchCommits {
 	 * @param repositoryName repository to subscribe
 	 * @param callback how to return new commit
 	 */
-	subscribeToAuthorRepository(authorName: string, repositoryName: string, callback: (arg0: Commit) => void) : void {
+	subscribeToAuthorRepository(authorName: string, repositoryName: string, callback: (commit: ICommit) => void) : void {
 		authorName = authorName.replace(/\s/g, '');
 		this.subscribe(`${authorName}/${repositoryName}`, callback);
 	}
@@ -128,11 +130,15 @@ class FacepunchCommits {
 	 * Subscribe to all commits
 	 * @param callback how to return new commit
 	 */
-	subscribeToAll(callback: (arg0: Commit) => void) : void {
+	subscribeToAll(callback: (commit: ICommit) => void) : void {
 		this.subscribe('', callback);
 	}
 
-	catchRequest(callback: (error: any) => void) : void {
+	/**
+	 * Calls callback function in case of error when receiving a commit
+	 * @param callback - A mistake will arrive here
+	 */
+	catchRequest(callback: (error: Error) => void) : void {
 		this.errorHandler = callback;
 	}
 }
