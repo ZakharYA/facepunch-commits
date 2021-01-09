@@ -1,4 +1,6 @@
-export interface Commit {
+import { customFunctions } from './customFunctions';
+
+export interface ICommit extends customFunctions {
 	/**
 	 * unique id commit
 	 */
@@ -16,9 +18,9 @@ export interface Commit {
 	 */
 	changeset: string,
 	/**
-	 * date created fixation commit (PLS SUPPORT UNIXTIME!!!)
+	 * date created fixation commit
 	 */
-	created: string, // support pls unixtime, fucking facepunch
+	created: string,
 	/**
 	 * commit message
 	 */
@@ -42,5 +44,5 @@ export default interface CommitsResponse {
 	total: number,
 	skip: number,
 	take: number,
-	results: Commit[]
+	results: ICommit[]
 }
