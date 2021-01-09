@@ -1,6 +1,6 @@
 {
 	"name": "facepunch-commits",
-	"version": "2.0.3",
+	"version": "2.1.0",
 	"description": "parser commits from commits.facepunch.com",
 	"main": "dist/index.js",
 	"repository": {
@@ -9,7 +9,7 @@
 	},
 	"scripts": {
 		"build": "tsc",
-		"test": "node test.js"
+		"test": "tsc && node test.js"
 	},
 	"homepage": "https://gitlab.com/ZakharYA/facepunch-commits.git",
 	"bugs": "https://gitlab.com/ZakharYA/facepunch-commits/-/issues",
