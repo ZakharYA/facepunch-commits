@@ -46,6 +46,15 @@ class FacepunchCommits {
 				CommitsValidate(result);
 
 				return result.results;
+			})
+			.catch((err) => {
+				setTimeout(() => {
+					this.hasError = false;
+				}, this.options.intervalError);
+				this.hasError = true;
+
+				if (this.errorHandler) return this.errorHandler(err);
+				throw err;
 			});
 	}
 
@@ -83,15 +92,6 @@ class FacepunchCommits {
 
 					data.reverse();
 					data.map((e) => callback(e));
-				})
-				.catch((err) => {
-					setTimeout(() => {
-						this.hasError = false;
-					}, this.options.intervalError);
-					this.hasError = true;
-
-					if (this.errorHandler) return this.errorHandler(err);
-					throw err;
 				});
 		}, this.options.interval);
 	}
