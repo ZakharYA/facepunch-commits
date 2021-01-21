@@ -3,8 +3,6 @@ const facepunchCommits = require('../dist/index');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const assert = require('assert');
 
-// test sign
-
 describe('check library commits', function () {
 	it('subscribes to the commit and waits for the commit', function (done) {
 		const commits = new facepunchCommits(1000);
