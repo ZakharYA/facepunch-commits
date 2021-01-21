@@ -11,7 +11,7 @@ class FacepunchCommits {
 	};
 	latestCommit: {
 		[key: string]: number;
-	}
+	};
 	errorHandler: ((error: Error) => void) | undefined;
 	hasError: boolean;
 
@@ -19,11 +19,11 @@ class FacepunchCommits {
 	 * @param interval - how often new commits will be checked(milliseconds) (Default 1 min)
 	 * @param intervalError - How many times will the request be in case of an error(milliseconds)(Default 5 min)
 	 */
-	constructor(interval? : number, intervalError?: number) {
+	constructor(interval?: number, intervalError?: number) {
 		this.options = {
 			interval: interval || 60000,
 			intervalError: intervalError || 60000 * 5,
-			url: 'https://commits.facepunch.com/',
+			url: 'https://commits.facepunch.com/'
 		};
 
 		this.latestCommit = {};
@@ -34,7 +34,7 @@ class FacepunchCommits {
 	/**
 	 * @param params - Advanced Options in url
 	 */
-	async sendRequest(params: string) : Promise<CommitsResponse['results']> {
+	async sendRequest(params: string): Promise<CommitsResponse['results']> {
 		return fetch(`${this.options.url}${params}?format=json`)
 			.then((response) => {
 				if (!response.ok) throw response.text();
@@ -63,7 +63,7 @@ class FacepunchCommits {
 	 * @param params - Advanced Options in url
 	 * @param callback - return commit
 	 */
-	subscribe(params: string, callback: (commit: ICommit) => void) : void {
+	subscribe(params: string, callback: (commit: ICommit) => void): void {
 		setInterval(() => {
 			if (this.hasError) return;
 
@@ -101,7 +101,7 @@ class FacepunchCommits {
 	 * @param name repository to subscribe
 	 * @param callback callback how to return new commit
 	 */
-	subscribeToRepository(name: string, callback: (commit: ICommit) => void) : void {
+	subscribeToRepository(name: string, callback: (commit: ICommit) => void): void {
 		this.subscribe(`r/${name}`, callback);
 	}
 
@@ -110,18 +110,21 @@ class FacepunchCommits {
 	 * @param authorName author to subscribe
 	 * @param  callback how to return new commit
 	 */
-	subscribeToAuthor(authorName: string, callback: (commit: ICommit) => void) : void {
+	subscribeToAuthor(authorName: string, callback: (commit: ICommit) => void): void {
 		this.subscribe(authorName, callback);
 	}
 
 	/**
 	 * Subscribes to the commits of a specific author and repository
-	 * example: https://commits.facepunch.com/billford/rust_reboot
+	 * example:
+	 * authorName = billford
+	 * repositoryName = rust_reboot
+	 * https://commits.facepunch.com/billford/rust_reboot
 	 * @param authorName author to subscribe
 	 * @param repositoryName repository to subscribe
 	 * @param callback how to return new commit
 	 */
-	subscribeToAuthorRepository(authorName: string, repositoryName: string, callback: (commit: ICommit) => void) : void {
+	subscribeToAuthorRepository(authorName: string, repositoryName: string, callback: (commit: ICommit) => void): void {
 		authorName = authorName.replace(/\s/g, '');
 		this.subscribe(`${authorName}/${repositoryName}`, callback);
 	}
@@ -130,7 +133,7 @@ class FacepunchCommits {
 	 * Subscribe to all commits
 	 * @param callback how to return new commit
 	 */
-	subscribeToAll(callback: (commit: ICommit) => void) : void {
+	subscribeToAll(callback: (commit: ICommit) => void): void {
 		this.subscribe('', callback);
 	}
 
@@ -138,7 +141,7 @@ class FacepunchCommits {
 	 * Calls callback function in case of error when receiving a commit
 	 * @param callback - A mistake will arrive here
 	 */
-	catchRequest(callback: (error: Error) => void) : void {
+	catchRequest(callback: (error: Error) => void): void {
 		this.errorHandler = callback;
 	}
 }

@@ -1,6 +1,6 @@
 import { customFunctions } from './types/customFunctions';
 
-const hideSymbols = ['▌', '▆', '▄', '▅', '▍', '▋', '▇', '█'];
+const hideSymbols = [ '▌', '▆', '▄', '▅', '▍', '▋', '▇', '█' ];
 
 const customFunctions: customFunctions = {
 	isHide(): boolean {

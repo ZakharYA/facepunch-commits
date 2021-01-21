@@ -4,60 +4,67 @@ This library allows you to subscribe to commits from [commits](https://commits.f
 ## Documentation
 
 ### NPM
+
 ```
 npm i facepunch-commits
 ```
 
 ## Functions
+
 ```js
 subscribeToAuthor(name, callback)
 ```
+
 * **Key:** `name`
-	* **Type:** String.
-	* **Description:** Name of the author to subscribe to.
+    * **Type:** String.
+    * **Description:** Name of the author to subscribe to.
 * **Key:** `callback`
-	* **Type:** Function.
-	* **Description:** The function that will be called with the new commit.
+    * **Type:** Function.
+    * **Description:** The function that will be called with the new commit.
 
 ```js
 subscribeToRepository(name, callback)
 ```
+
 * **Key:** `name`
-	* **Type:** String.
-	* **Description:** Name of the repository to subscribe to.
+    * **Type:** String.
+    * **Description:** Name of the repository to subscribe to.
 * **Key:** `callback`
-	* **Type:** Function.
-	* **Description:** The function that will be called with the new commit.
+    * **Type:** Function.
+    * **Description:** The function that will be called with the new commit.
 
 ```js
 subscribeToAuthorRepository(authorName, repositoryName, callback)
 ```
+
 * **Key:** `authorName`
-	* **Type:** String.
-	* **Description:** Name of the author to subscribe to.
+    * **Type:** String.
+    * **Description:** Name of the author to subscribe to.
 * **Key:** `repositoryName`
-	* **Type:** String.
-	* **Description:** Name of the repository to subscribe to.
+    * **Type:** String.
+    * **Description:** Name of the repository to subscribe to.
 * **Key:** `callback`
-	* **Type:** Function.
-	* **Description:** The function that will be called with the new commit.
+    * **Type:** Function.
+    * **Description:** The function that will be called with the new commit.
 
 ```js
 subscribeToAll(callback)
 ```
+
 * **Key:** `callback`
-	* **Type:** Function.
-	* **Description:** The function that will be called with the new commit.
+    * **Type:** Function.
+    * **Description:** The function that will be called with the new commit.
 
 ```js
 catchRequest(callback)
 ```
+
 * **Key:** `callback`
-	* **Type:** Function.
+    * **Type:** Function.
     * **Description:** Called when a request has occurred. Return error
 
-
 # Example return in callback function
+
 ```json
 {
       "id": 372193,
@@ -74,21 +81,25 @@ catchRequest(callback)
 ```
 
 ### Callback also has additional features
+
 ```js
 isHide()
 ```
+
 * **Type:** Function.
-	* **Description:** Checks whether the switch is hidden. (blues with symbols)
-	* **Return:** boolean
+    * **Description:** Checks whether the switch is hidden. (blues with symbols)
+    * **Return:** boolean
 
 ```js
 toUnixTime()
 ```
+
 * **Type:** Function.
-	* **Description:** Convects date in unixtime
-	* **Return:** number
+    * **Description:** Convects date in unixtime
+    * **Return:** number
 
 ## Example usage
+
 ```js
 const FacepunchCommits = require('facepunch-commits');
 
@@ -116,5 +127,6 @@ commits.catchRequest((err) => {
 	console.log('new error', err);
 })
 ```
+
 <a href="https://www.npmjs.com/package/facepunch-commits"><img src="https://img.shields.io/npm/v/facepunch-commits.svg?style=flat-square" alt="NPM version"></a>
 <a href="https://vk.com/ghost1337gg"><img src="https://brand.vkforms.ru/static/media/logo_color_154.08f6e176.svg" height=20></a>
