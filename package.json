@@ -9,7 +9,7 @@
 	},
 	"scripts": {
 		"build": "tsc",
-		"test": "tsc && mocha test/**/*.js --timeout 10000"
+		"test": "tsc && mocha test/**/*.js --timeout 10000 --exit"
 	},
 	"homepage": "https://github.com/ZakharYA/facepunch-commits.git",
 	"contributors": [
