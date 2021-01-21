@@ -1,4 +1,9 @@
+#npm
 node_modules
 package-lock.json
+
+#ide
 .idea
+
+#build
 dist
