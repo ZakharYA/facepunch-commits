@@ -1,13 +1,25 @@
-<div style="text-align: center;"><img src="https://commits.facepunch.com/logo.svg" alt="facepunch logo"></div>
-This library allows you to subscribe to commits from [commits](https://commits.facepunch.com)
+![Facepunch Logo](https://commits.facepunch.com/logo.svg)
 
-## Documentation
+This library allows you to track the commits from the [facepunch site](https://commits.facepunch.com).
 
-### NPM
+[![NPM Version][npm-image]][npm-url]
+[![NPM Downloads][downloads-image]][downloads-url]
 
+## Installation
+
+This is a [Node.js](https://nodejs.org/en/) module available through the
+[npm registry](https://www.npmjs.com/).
+
+```bash
+$ npm i facepunch-commits
 ```
-npm i facepunch-commits
-```
+
+## Features
+
+* Ability to subscribe to commits
+* Set the interval after which the next request to view the commits will be executed
+* Strict typing
+* Additional methods that allow you to check whether the commit is hidden, as well as convect the date in unixtime
 
 ## Functions
 
@@ -63,7 +75,25 @@ catchRequest(callback)
     * **Type:** Function.
     * **Description:** Called when a request has occurred. Return error
 
-# Example return in callback function
+## Callback also has additional features
+
+```js
+isHide()
+```
+
+* **Type:** Function.
+  * **Description:** Checks whether the switch is hidden. (blues with symbols)
+  * **Return:** boolean
+
+```js
+toUnixTime()
+```
+
+* **Type:** Function.
+  * **Description:** Convects date in unixtime
+  * **Return:** number
+
+## Example return in callback function
 
 ```json
 {
@@ -79,24 +109,6 @@ catchRequest(callback)
       }
 }
 ```
-
-### Callback also has additional features
-
-```js
-isHide()
-```
-
-* **Type:** Function.
-    * **Description:** Checks whether the switch is hidden. (blues with symbols)
-    * **Return:** boolean
-
-```js
-toUnixTime()
-```
-
-* **Type:** Function.
-    * **Description:** Convects date in unixtime
-    * **Return:** number
 
 ## Example usage
 
@@ -128,5 +140,14 @@ commits.catchRequest((err) => {
 })
 ```
 
-<a href="https://www.npmjs.com/package/facepunch-commits"><img src="https://img.shields.io/npm/v/facepunch-commits.svg?style=flat-square" alt="NPM version"></a>
-<a href="https://vk.com/ghost1337gg"><img src="https://brand.vkforms.ru/static/media/logo_color_154.08f6e176.svg" height=20></a>
+## People
+Author [Zakhar Yaitskih](https://github.com/ZakharYA)
+
+## License
+
+[MIT](LICENSE)
+
+[npm-image]: https://img.shields.io/npm/v/facepunch-commits.svg
+[npm-url]: https://www.npmjs.com/package/facepunch-commits
+[downloads-image]: https://img.shields.io/npm/dm/facepunch-commits
+[downloads-url]: https://npmcharts.com/compare/facepunch-commits?minimal=true
