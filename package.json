@@ -1,6 +1,6 @@
 {
 	"name": "facepunch-commits",
-	"version": "2.1.4",
+	"version": "2.1.5",
 	"description": "parser commits from commits.facepunch.com",
 	"main": "dist/index.js",
 	"repository": {
@@ -9,7 +9,7 @@
 	},
 	"scripts": {
 		"build": "tsc",
-		"test": "tsc && node test.js"
+		"test": "mocha test/**/*.js --timeout 10000"
 	},
 	"homepage": "https://github.com/ZakharYA/facepunch-commits.git",
 	"contributors": [
@@ -24,7 +24,8 @@
 		"@typescript-eslint/eslint-plugin": "^4.9.0",
 		"@typescript-eslint/parser": "^4.9.0",
 		"eslint": "^7.8.1",
-		"typescript": "^4.1.2"
+		"typescript": "^4.1.2",
+		"mocha": "^8.2.1"
 	},
 	"dependencies": {
 		"ajv": "^6.12.6",

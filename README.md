@@ -82,16 +82,16 @@ isHide()
 ```
 
 * **Type:** Function.
-  * **Description:** Checks whether the switch is hidden. (blues with symbols)
-  * **Return:** boolean
+    * **Description:** Checks whether the switch is hidden. (blues with symbols)
+    * **Return:** boolean
 
 ```js
 toUnixTime()
 ```
 
 * **Type:** Function.
-  * **Description:** Convects date in unixtime
-  * **Return:** number
+    * **Description:** Convects date in unixtime
+    * **Return:** number
 
 ## Example return in callback function
 
@@ -141,6 +141,7 @@ commits.catchRequest((err) => {
 ```
 
 ## People
+
 Author [Zakhar Yaitskih](https://github.com/ZakharYA)
 
 ## License
@@ -148,6 +149,9 @@ Author [Zakhar Yaitskih](https://github.com/ZakharYA)
 [MIT](LICENSE)
 
 [npm-image]: https://img.shields.io/npm/v/facepunch-commits.svg
+
 [npm-url]: https://www.npmjs.com/package/facepunch-commits
+
 [downloads-image]: https://img.shields.io/npm/dm/facepunch-commits
+
 [downloads-url]: https://npmcharts.com/compare/facepunch-commits?minimal=true
