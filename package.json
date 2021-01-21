@@ -1,6 +1,6 @@
 {
 	"name": "facepunch-commits",
-	"version": "2.1.2",
+	"version": "2.1.3",
 	"description": "parser commits from commits.facepunch.com",
 	"main": "dist/index.js",
 	"repository": {
@@ -12,11 +12,10 @@
 		"test": "tsc && node test.js"
 	},
 	"homepage": "https://gitlab.com/ZakharYA/facepunch-commits.git",
-	"bugs": "https://gitlab.com/ZakharYA/facepunch-commits/-/issues",
-	"author": {
-		"name": "Zakhar (https://vk.com/ghost1337gg)",
-		"email": "zaharsd7@gmail.com"
-	},
+	"contributors": [
+		"Zakhar Yaitskih <ZakharYA@protonmail.com>"
+	],
+	"author": "Zakhar Yaitskih (ZakharYA@protonmail.com)",
 	"types": "dist/index.d.ts",
 	"license": "MIT",
 	"devDependencies": {
@@ -37,5 +36,8 @@
 		"commits",
 		"node",
 		"js"
-	]
+	],
+	"engines": {
+		"node": ">= 0.10.0"
+	}
 }
