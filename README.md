@@ -4,6 +4,7 @@ This library allows you to track the commits from the [facepunch site](https://c
 
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][downloads-url]
+[![Build][travis-image]][travis-url]
 
 ## Installation
 
@@ -155,3 +156,7 @@ Author [Zakhar Yaitskih](https://github.com/ZakharYA)
 [downloads-image]: https://img.shields.io/npm/dm/facepunch-commits
 
 [downloads-url]: https://npmcharts.com/compare/facepunch-commits?minimal=true
+
+[travis-image]: https://travis-ci.com/ZakharYA/facepunch-commits.svg?branch=master
+
+[travis-url]: https://travis-ci.com/ZakharYA/facepunch-commits
