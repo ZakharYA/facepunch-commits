@@ -1,3 +1,12 @@
+/*!
+ * facepunch-commits
+ * Copyright(c) 2021 Zakhar
+ * MIT Licensed
+ */
+
+/**
+ * Module dependencies.
+ */
 import fetch from 'node-fetch';
 import CommitsValidate, { CommitsResponse } from './types/CommitsResponse.validator';
 import { ICommit } from './types/CommitsResponse';

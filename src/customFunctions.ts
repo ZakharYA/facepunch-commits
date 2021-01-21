@@ -1,3 +1,12 @@
+/*!
+ * facepunch-commits
+ * Copyright(c) 2021 Zakhar
+ * MIT Licensed
+ */
+
+/**
+ * Module dependencies.
+ */
 import { customFunctions } from './types/customFunctions';
 
 const hideSymbols = [ '▌', '▆', '▄', '▅', '▍', '▋', '▇', '█' ];
