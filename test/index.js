@@ -15,7 +15,7 @@ describe('check library commits', function () {
 			called = true;
 
 			try {
-				assert(typeof (commit.id) === 'number');
+				assert(typeof (commit.id) === 'string');
 				assert(typeof (commit.repo) === 'string');
 				assert(typeof (commit.branch) === 'string');
 				assert(typeof (commit.changeset) === 'string');
