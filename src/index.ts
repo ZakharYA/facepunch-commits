@@ -60,6 +60,9 @@ class FacepunchCommits {
 				setTimeout(() => {
 					this.hasError = false;
 				}, this.options.intervalError);
+
+				if (this.hasError) return;
+
 				this.hasError = true;
 
 				if (this.errorHandler) return this.errorHandler(err);
