@@ -106,8 +106,8 @@ class FacepunchCommits {
 						data.reverse();
 						data.map((e) => callback(e));
 					});
-			}, this.options.interval);
-		}, 1000);
+			}, 1000);
+		}, this.options.interval);
 	}
 
 	/**
