@@ -76,33 +76,35 @@ class FacepunchCommits {
 		setInterval(() => {
 			if (this.hasError) return;
 
-			this.sendRequest(params)
-				.then((result) => {
-					if (!(params in this.latestCommit)) {
+			setTimeout(() => {
+				this.sendRequest(params)
+					.then((result) => {
+						if (!(params in this.latestCommit)) {
+							this.latestCommit[params] = result[0].id;
+							return;
+						}
+
+						if (result[0].id === this.latestCommit[params]) return;
+
+						const data: ICommit[] = [];
+
+						for (let i = 0; i < result.length; i++) {
+							if (result[i].id === this.latestCommit[params]) break;
+
+							Object.values(customFunctions).forEach(value => {
+								Object.defineProperty(result[i], value.name, { get: () => value });
+							});
+
+							data.push(result[i]);
+						}
+
 						this.latestCommit[params] = result[0].id;
-						return;
-					}
 
-					if (result[0].id === this.latestCommit[params]) return;
-
-					const data: ICommit[] = [];
-
-					for (let i = 0; i < result.length; i++) {
-						if (result[i].id === this.latestCommit[params]) break;
-
-						Object.values(customFunctions).forEach(value => {
-							Object.defineProperty(result[i], value.name, { get: () => value });
-						});
-
-						data.push(result[i]);
-					}
-
-					this.latestCommit[params] = result[0].id;
-
-					data.reverse();
-					data.map((e) => callback(e));
-				});
-		}, this.options.interval);
+						data.reverse();
+						data.map((e) => callback(e));
+					});
+			}, this.options.interval);
+		}, 1000);
 	}
 
 	/**
