@@ -65,8 +65,11 @@ class FacepunchCommits {
 
 				this.hasError = true;
 
-				if (this.errorHandler) return this.errorHandler(err);
-				throw err;
+				if (this.errorHandler) {
+					this.errorHandler(err);
+				} else {
+					throw err;
+				}
 			});
 	}
 
