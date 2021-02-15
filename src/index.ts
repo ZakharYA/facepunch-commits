@@ -93,6 +93,8 @@ class FacepunchCommits {
 			setTimeout(() => {
 				this.sendRequest(params)
 					.then((result) => {
+						if (!result.length) return;
+
 						if (!(params in this.latestCommit)) {
 							this.latestCommit[params] = result[0].id;
 							return;
