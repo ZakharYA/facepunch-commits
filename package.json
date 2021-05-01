@@ -1,6 +1,6 @@
 {
 	"name": "facepunch-commits",
-	"version": "2.1.16",
+	"version": "2.2.0",
 	"description": "parser commits from commits.facepunch.com",
 	"main": "dist/index.js",
 	"repository": {
@@ -9,8 +9,7 @@
 	},
 	"scripts": {
 		"build": "tsc",
-		"test": "tsc && mocha test/**/*.js --timeout 10000 --exit",
-		"prepublish": "tsc"
+		"test": "mocha test/**/*.js --timeout 10000 --exit"
 	},
 	"homepage": "https://github.com/ZakharYA/facepunch-commits.git",
 	"contributors": [

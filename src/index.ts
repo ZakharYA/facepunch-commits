@@ -45,12 +45,12 @@ class FacepunchCommits {
 	 */
 	async sendRequest(params: string): Promise<CommitsResponse['results']> {
 		return fetch(`${this.options.url}${params}?format=json`)
-			.then((response) => {
+			.then(response => {
 				if (!response.ok) throw response.text();
 				return response.json();
 			})
-			.then((result) => {
-				if (!('results' in result)) throw result;
+			.then(result => {
+				if (!('results' in result)) throw new Error(result);
 
 				CommitsValidate(result);
 
@@ -60,14 +60,6 @@ class FacepunchCommits {
 				setTimeout(() => {
 					this.hasError = false;
 				}, this.options.intervalError);
-
-				// if (this.hasError) throw err;
-				//
-				// this.hasError = true;
-				//
-				// if (this.errorHandler) this.errorHandler(err);
-				//
-				// throw err;
 
 				if (!this.hasError) {
 					this.hasError = true;
@@ -92,7 +84,7 @@ class FacepunchCommits {
 
 			setTimeout(() => {
 				this.sendRequest(params)
-					.then((result) => {
+					.then(result => {
 						if (!result) return;
 
 						if (!(params in this.latestCommit)) {
