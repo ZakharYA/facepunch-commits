@@ -23,7 +23,7 @@ jobs:
       - name: npm build
         run: |
           npm ci
-          npx typescript-json-validator src/types/CommitsResponse.ts
+          npm run validator
           npm run build --if-present
         env:
           CI: true

@@ -9,7 +9,8 @@
 	},
 	"scripts": {
 		"build": "tsc",
-		"test": "mocha test/**/*.js --timeout 10000 --exit"
+		"test": "mocha test/**/*.js --timeout 10000 --exit",
+		"validator": "npx typescript-json-validator src/types/CommitsResponse.ts"
 	},
 	"homepage": "https://github.com/ZakharYA/facepunch-commits.git",
 	"contributors": [

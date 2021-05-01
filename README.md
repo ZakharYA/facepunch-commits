@@ -1,10 +1,18 @@
-![Facepunch Logo](https://commits.facepunch.com/logo.svg)
+<h1 align="center">Watch facepunch commits</h1>
+
+<h2 align="center">
+    <a href="commits.facepunch.com">
+        <img width="134" src="https://commits.facepunch.com/logo.svg">
+    </a>
+</h2>
 
 This library allows you to track the commits from the [facepunch site](https://commits.facepunch.com).
 
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][downloads-url]
 [![Build][travis-image]][travis-url]
+[![Node CI][github-actions-node-ci]][github-actions-node-ci-url]
+[![NPM Publish][github-actions-npm-publish]][github-actions-npm-publish-url]
 
 ## Installation
 
@@ -141,6 +149,23 @@ commits.catchRequest((err) => {
 })
 ```
 
+## Running test
+```shell
+$ npm run validator
+$ npm test
+```
+
+## For developers (suggest an idea)
+### Usage
+```shell
+git clone https://github.com/ZakharYA/facepunch-commits.git
+npm i
+# code...
+npm run validator
+npm run build
+# create pull request
+```
+
 ## People
 
 Author [Zakhar Yaitskih](https://github.com/ZakharYA)
@@ -160,3 +185,11 @@ Author [Zakhar Yaitskih](https://github.com/ZakharYA)
 [travis-image]: https://travis-ci.com/ZakharYA/facepunch-commits.svg?branch=master
 
 [travis-url]: https://travis-ci.com/ZakharYA/facepunch-commits
+
+[github-actions-node-ci]: https://github.com/ZakharYA/facepunch-commits/actions/workflows/test.yml/badge.svg
+
+[github-actions-node-ci-url]: https://github.com/ZakharYA/facepunch-commits/actions/workflows/test.yml
+
+[github-actions-npm-publish]: https://github.com/ZakharYA/facepunch-commits/actions/workflows/npm-publish.yml/badge.svg
+
+[github-actions-npm-publish-url]: https://github.com/ZakharYA/facepunch-commits/actions/workflows/npm-publish.yml
