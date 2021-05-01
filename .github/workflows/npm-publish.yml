@@ -1,0 +1,35 @@
+name: NPM Publish
+
+on:
+  push:
+    branches: [ master ]
+  workflow_run:
+    workflows: [ "Node CI" ]
+    types:
+      - completed
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+
+      - name: npm build
+        run: |
+          npm ci
+          npx typescript-json-validator src/types/CommitsResponse.ts
+          npm run build --if-present
+          npm publish
+        env:
+          CI: true
+
+      - name: npm deploy
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
