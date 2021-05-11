@@ -1,7 +1,7 @@
 name: up version package
 
 on: 
-  pull:
+  pull_request:
   
 jobs:
   up_version:
