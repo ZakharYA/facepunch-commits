@@ -2,6 +2,7 @@ name: up version package
 
 on:
   pull_request:
+  pull_request_target:
   
 jobs:
   up_version:
