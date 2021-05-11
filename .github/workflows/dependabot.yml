@@ -1,7 +1,8 @@
 name: up version package
 
 on: 
-  pull_request:
+  pull_request_target:
+    types: [assigned, opened, synchronize, reopened, edited]
   
 jobs:
   up_version:
@@ -28,5 +29,5 @@ jobs:
           commit_message: Update package version
           branch: ${{ github.head_ref }}
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_ME }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
