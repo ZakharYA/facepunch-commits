@@ -1,11 +1,9 @@
 name: NPM Publish
 
 on:
-  workflow_run:
-    workflows: [ "Node CI" ]
-    branches: [ master ]
-    types:
-      - completed
+  push:
+    branches:
+      - master
 
 jobs:
   build:
