@@ -1,7 +1,8 @@
 name: up version package
 
-on:
-  pull_request:
+on: 
+  pull_request_target:
+    types: [assigned, opened, synchronize, reopened, edited]
   
 jobs:
   up_version:
@@ -10,7 +11,7 @@ jobs:
     
     steps:
       - name: Git checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
 
@@ -20,10 +21,13 @@ jobs:
           node-version: 14.x
 
       - name: UP version(patch)
-        run: npm version patch
-
-      - name: Commit changes
+        run: npm version patch --no-git-tag-version
+          
+      - name: Commit & Push changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update package version
+          branch: ${{ github.head_ref }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
