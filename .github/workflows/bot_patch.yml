@@ -1,0 +1,28 @@
+name: up version package
+
+on:
+  pull_request:
+  
+jobs:
+  up_version:
+    if: github.event.pusher.name == "dependabot"
+    runs-on: ubuntu-latest
+
+    - name: Git checkout
+      uses: actions/checkout@v1
+      with:
+        ref: ${{ github.head_ref }}
+      
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+        
+    - name: UP version(patch)
+      run: npm version patch
+    
+    - name: Commit changes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Update package version
+    
