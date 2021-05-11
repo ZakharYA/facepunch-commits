@@ -26,4 +26,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update package version
+          commit_user_name: Facepunch Commits Bot
+          commit_user_email: fp-commits@example.org
+          commit_author: Facepunch Commits Bot <fp-commits@example.org>
     
