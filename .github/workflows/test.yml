@@ -1,9 +1,7 @@
 name: Node CI
 
 on:
-  push:
-    paths:
-      - '**.js'
+  pull_request:
 
 jobs:
   build:
