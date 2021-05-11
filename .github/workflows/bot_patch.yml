@@ -5,7 +5,7 @@ on:
   
 jobs:
   up_version:
-    if: ${{ github.event.pusher.name == 'dependabot' }}
+    if: ${{ github.actor == 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     
     steps:
