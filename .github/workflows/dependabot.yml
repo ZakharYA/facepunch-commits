@@ -2,7 +2,7 @@ name: up version package
 
 on: 
   pull_request_target:
-    types: [assigned, opened, synchronize, reopened, edited]
+    types: [opened]
   
 jobs:
   up_version:
