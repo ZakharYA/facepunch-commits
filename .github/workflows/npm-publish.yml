@@ -23,6 +23,8 @@ jobs:
           node-version: '14.x'
           registry-url: 'https://registry.npmjs.org'
 
+      - run: rm -rf .github
+
       - name: npm build
         run: |
           npm ci
