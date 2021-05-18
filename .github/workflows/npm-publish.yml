@@ -2,7 +2,7 @@ name: NPM Publish
 
 on:
   workflow_run:
-    workflows: ["bump"]
+    workflows: ["Node CI"]
     branches: ["master"]
     types:
       - completed
