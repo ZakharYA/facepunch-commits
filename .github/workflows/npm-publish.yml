@@ -25,9 +25,9 @@ jobs:
 
       - run: rm -rf .github
 
-      - name: npm build
+      - name: npm install and build
         run: |
-          npm ci
+          npm install
           npm run validator
           npm run build --if-present
         env:
