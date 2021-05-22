@@ -7,14 +7,14 @@
 /**
  * Module dependencies.
  */
-import { customFunctions } from './types/customFunctions';
+import { CustomFunctions } from './types/customFunctions';
 
-const hideSymbols = [ '▌', '▆', '▄', '▅', '▍', '▋', '▇', '█' ];
+const hideSymbols = ['▌', '▆', '▄', '▅', '▍', '▋', '▇', '█'];
 
-const customFunctions: customFunctions = {
+const customFunctions: CustomFunctions = {
 	isHide(): boolean {
-		for (let i = 0; i < hideSymbols.length; i++) {
-			if (this.message.indexOf(hideSymbols[i]) != -1) return true;
+		for (const symbol of hideSymbols) {
+			if (this.message.indexOf(symbol) > -1) return true;
 		}
 
 		return false;
@@ -22,7 +22,7 @@ const customFunctions: customFunctions = {
 
 	toUnixTime(): number {
 		return new Date(this.created).getTime() / 1000;
-	}
+	},
 };
 
 export = customFunctions;

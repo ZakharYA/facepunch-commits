@@ -9,7 +9,7 @@
  */
 import { ICommit } from './CommitsResponse';
 
-export interface customFunctions {
+export interface CustomFunctions {
 	/**
 	 * Whether the commit is hidden
 	 */

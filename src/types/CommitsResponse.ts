@@ -7,33 +7,33 @@
 /**
  * Module dependencies.
  */
-import { customFunctions } from './customFunctions';
+import { CustomFunctions } from './customFunctions';
 
-export interface ICommit extends customFunctions {
+export interface ICommit extends CustomFunctions {
 	/**
 	 * unique id commit
 	 */
-	id: number,
+	id: number;
 	/**
 	 * name repository
 	 */
-	repo: string,
+	repo: string;
 	/**
 	 * name branch
 	 */
-	branch: string,
+	branch: string;
 	/**
 	 * changeset id
 	 */
-	changeset: string,
+	changeset: string;
 	/**
 	 * date created fixation commit
 	 */
-	created: string,
+	created: string;
 	/**
 	 * commit message
 	 */
-	message: string,
+	message: string;
 	/**
 	 * user info commit
 	 */
@@ -41,17 +41,17 @@ export interface ICommit extends customFunctions {
 		/**
 		 * name author commit
 		 */
-		name: string,
+		name: string;
 		/**
 		 * avatar author commit
 		 */
 		avatar: string
-	}
+	};
 }
 
 export default interface CommitsResponse {
-	total: number,
-	skip: number,
-	take: number,
-	results: ICommit[]
+	total: number;
+	skip: number;
+	take: number;
+	results: ICommit[];
 }
