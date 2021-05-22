@@ -20,16 +20,21 @@ class FacepunchCommits {
 		intervalError: number,
 		url: string,
 	};
+
 	latestCommit: {
 		[key: string]: number;
 	};
+
+	// eslint-disable-next-line no-unused-vars
 	errorHandler: ((error: Error) => void) | undefined;
+
 	hasError: boolean;
 
 	/**
 	 * @param interval - how often new commits will be checked
 	 * (milliseconds)(Default 1 min)
-	 * @param intervalError - How many times will the request be in case of an err
+	 * @param intervalError -
+	 * How many times will the request be in case of an err
 	 * (milliseconds)(Default 5 min)
 	 */
 	constructor(interval?: number, intervalError?: number) {
@@ -63,7 +68,7 @@ class FacepunchCommits {
 			.catch((err) => {
 				setTimeout(() => {
 					this.hasError = false;
-				},         this.options.intervalError);
+				}, this.options.intervalError);
 
 				if (!this.hasError) {
 					this.hasError = true;
@@ -82,6 +87,7 @@ class FacepunchCommits {
 	 * @param params - Advanced Options in url
 	 * @param callback - return commit
 	 */
+	// eslint-disable-next-line no-unused-vars
 	subscribe(params: string, callback: (commit: ICommit) => void): void {
 		setInterval(() => {
 			if (this.hasError) return;
@@ -100,6 +106,7 @@ class FacepunchCommits {
 
 						const data: ICommit[] = [];
 
+						// eslint-disable-next-line no-restricted-syntax
 						for (const commit of result) {
 							if (commit.id === this.latestCommit[params]) break;
 
@@ -113,10 +120,10 @@ class FacepunchCommits {
 						this.latestCommit[params] = result[0].id;
 
 						data.reverse();
-						data.map(e => callback(e));
+						data.map((e) => callback(e));
 					});
-			},         1000);
-		},          this.options.interval);
+			}, 1000);
+		}, this.options.interval);
 	}
 
 	/**
@@ -126,6 +133,7 @@ class FacepunchCommits {
 	 */
 	subscribeToRepository(
 		name: string,
+		// eslint-disable-next-line no-unused-vars
 		callback: (commit: ICommit) => void,
 	): void {
 		this.subscribe(`r/${name}`, callback);
@@ -138,8 +146,9 @@ class FacepunchCommits {
 	 */
 	subscribeToAuthor(
 		authorName: string,
+		// eslint-disable-next-line no-unused-vars
 		callback: (commit: ICommit) => void,
-		): void {
+	): void {
 		this.subscribe(authorName, callback);
 	}
 
@@ -156,8 +165,9 @@ class FacepunchCommits {
 	subscribeToAuthorRepository(
 		authorName: string,
 		repositoryName: string,
+		// eslint-disable-next-line no-unused-vars
 		callback: (commit: ICommit) => void,
-		): void {
+	): void {
 		const authorNameReplaced = authorName.replace(/\s/g, '');
 		this.subscribe(`${authorNameReplaced}/${repositoryName}`, callback);
 	}
@@ -166,6 +176,7 @@ class FacepunchCommits {
 	 * Subscribe to all commits
 	 * @param callback how to return new commit
 	 */
+	// eslint-disable-next-line no-unused-vars
 	subscribeToAll(callback: (commit: ICommit) => void): void {
 		this.subscribe('', callback);
 	}
@@ -174,6 +185,7 @@ class FacepunchCommits {
 	 * Calls callback function in case of error when receiving a commit
 	 * @param callback - A mistake will arrive here
 	 */
+	// eslint-disable-next-line no-unused-vars
 	catchRequest(callback: (error: Error) => void): void {
 		this.errorHandler = callback;
 	}

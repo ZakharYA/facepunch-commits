@@ -1,11 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const facepunchCommits = require('../dist/index');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const assert = require('assert');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const FacepunchCommits = require('../dist/index');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 
-describe('check library commits', function () {
-	it('subscribes to the commit and waits for the commit', function (done) {
-		const commits = new facepunchCommits(1000);
+describe('check library commits', () => {
+	it('subscribes to the commit and waits for the commit', (done) => {
+		const commits = new FacepunchCommits(1000);
 
 		commits.latestCommit[''] = 0;
 		let called = false;
