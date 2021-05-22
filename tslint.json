@@ -1,0 +1,26 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended",
+				"tslint-config-airbnb"
+    ],
+    "jsRules": {},
+    "rules": {
+			"ter-indent": [true, "tab"],
+			"indent": [
+				true,
+				"tabs",
+				4
+			],
+			"max-line-length": [
+				true,
+				{
+					"limit": 80,
+					"ignore-pattern": "^import |^export {(.*?)}",
+					"check-strings": true,
+					"check-regex": true
+				}
+			]
+		},
+    "rulesDirectory": []
+}

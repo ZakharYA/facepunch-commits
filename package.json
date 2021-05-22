@@ -1,6 +1,6 @@
 {
 	"name": "facepunch-commits",
-	"version": "2.2.9",
+	"version": "3.0.0",
 	"description": "parser commits from commits.facepunch.com",
 	"main": "dist/index.js",
 	"repository": {
@@ -9,6 +9,7 @@
 	},
 	"scripts": {
 		"build": "tsc",
+		"tslint": "tslint --project tsconfig.json",
 		"test": "mocha test/**/*.js --timeout 10000 --exit",
 		"validator": "npx typescript-json-validator src/types/CommitsResponse.ts"
 	},
@@ -25,12 +26,14 @@
 		"@typescript-eslint/eslint-plugin": "^4.9.0",
 		"@typescript-eslint/parser": "^4.9.0",
 		"eslint": "^7.8.1",
-		"typescript": "^4.1.2",
-		"mocha": "^8.2.1"
+		"mocha": "^8.2.1",
+		"tslint-config-airbnb": "^5.11.2",
+		"typescript": "^4.1.2"
 	},
 	"dependencies": {
 		"ajv": "^6.12.6",
-		"node-fetch": "^2.6.1"
+		"node-fetch": "^2.6.1",
+		"tslint": "^6.1.3"
 	},
 	"keywords": [
 		"facepunch",

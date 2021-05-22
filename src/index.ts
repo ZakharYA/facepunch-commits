@@ -7,16 +7,18 @@
 /**
  * Module dependencies.
  */
-import fetch from 'node-fetch';
-import CommitsValidate, { CommitsResponse } from './types/CommitsResponse.validator';
+import nodeFetch from 'node-fetch';
+import CommitsResponseValidator, { CommitsResponse } from './types/CommitsResponse.validator';
 import { ICommit } from './types/CommitsResponse';
 import customFunctions from './customFunctions';
+
+const fetch = nodeFetch;
 
 class FacepunchCommits {
 	options: {
 		interval: number,
 		intervalError: number,
-		url: string
+		url: string,
 	};
 	latestCommit: {
 		[key: string]: number;
@@ -25,14 +27,16 @@ class FacepunchCommits {
 	hasError: boolean;
 
 	/**
-	 * @param interval - how often new commits will be checked(milliseconds) (Default 1 min)
-	 * @param intervalError - How many times will the request be in case of an error(milliseconds)(Default 5 min)
+	 * @param interval - how often new commits will be checked
+	 * (milliseconds)(Default 1 min)
+	 * @param intervalError - How many times will the request be in case of an err
+	 * (milliseconds)(Default 5 min)
 	 */
 	constructor(interval?: number, intervalError?: number) {
 		this.options = {
 			interval: interval || 60000,
 			intervalError: intervalError || 60000 * 5,
-			url: 'https://commits.facepunch.com/'
+			url: 'https://commits.facepunch.com/',
 		};
 
 		this.latestCommit = {};
@@ -45,21 +49,21 @@ class FacepunchCommits {
 	 */
 	async sendRequest(params: string): Promise<CommitsResponse['results']> {
 		return fetch(`${this.options.url}${params}?format=json`)
-			.then(response => {
+			.then((response) => {
 				if (!response.ok) throw response.text();
 				return response.json();
 			})
-			.then(result => {
+			.then((result) => {
 				if (!('results' in result)) throw new Error(result);
 
-				CommitsValidate(result);
+				CommitsResponseValidator(result);
 
 				return result.results;
 			})
 			.catch((err) => {
 				setTimeout(() => {
 					this.hasError = false;
-				}, this.options.intervalError);
+				},         this.options.intervalError);
 
 				if (!this.hasError) {
 					this.hasError = true;
@@ -84,7 +88,7 @@ class FacepunchCommits {
 
 			setTimeout(() => {
 				this.sendRequest(params)
-					.then(result => {
+					.then((result) => {
 						if (!result) return;
 
 						if (!(params in this.latestCommit)) {
@@ -96,23 +100,23 @@ class FacepunchCommits {
 
 						const data: ICommit[] = [];
 
-						for (let i = 0; i < result.length; i++) {
-							if (result[i].id === this.latestCommit[params]) break;
+						for (const commit of result) {
+							if (commit.id === this.latestCommit[params]) break;
 
-							Object.values(customFunctions).forEach(value => {
-								Object.defineProperty(result[i], value.name, { get: () => value });
+							Object.values(customFunctions).forEach((value) => {
+								Object.defineProperty(commit, value.name, { get: () => value });
 							});
 
-							data.push(result[i]);
+							data.push(commit);
 						}
 
 						this.latestCommit[params] = result[0].id;
 
 						data.reverse();
-						data.map((e) => callback(e));
+						data.map(e => callback(e));
 					});
-			}, 1000);
-		}, this.options.interval);
+			},         1000);
+		},          this.options.interval);
 	}
 
 	/**
@@ -120,7 +124,10 @@ class FacepunchCommits {
 	 * @param name repository to subscribe
 	 * @param callback callback how to return new commit
 	 */
-	subscribeToRepository(name: string, callback: (commit: ICommit) => void): void {
+	subscribeToRepository(
+		name: string,
+		callback: (commit: ICommit) => void,
+	): void {
 		this.subscribe(`r/${name}`, callback);
 	}
 
@@ -129,7 +136,10 @@ class FacepunchCommits {
 	 * @param authorName author to subscribe
 	 * @param  callback how to return new commit
 	 */
-	subscribeToAuthor(authorName: string, callback: (commit: ICommit) => void): void {
+	subscribeToAuthor(
+		authorName: string,
+		callback: (commit: ICommit) => void,
+		): void {
 		this.subscribe(authorName, callback);
 	}
 
@@ -143,9 +153,13 @@ class FacepunchCommits {
 	 * @param repositoryName repository to subscribe
 	 * @param callback how to return new commit
 	 */
-	subscribeToAuthorRepository(authorName: string, repositoryName: string, callback: (commit: ICommit) => void): void {
-		authorName = authorName.replace(/\s/g, '');
-		this.subscribe(`${authorName}/${repositoryName}`, callback);
+	subscribeToAuthorRepository(
+		authorName: string,
+		repositoryName: string,
+		callback: (commit: ICommit) => void,
+		): void {
+		const authorNameReplaced = authorName.replace(/\s/g, '');
+		this.subscribe(`${authorNameReplaced}/${repositoryName}`, callback);
 	}
 
 	/**
