@@ -13,9 +13,11 @@ export interface CustomFunctions {
 	/**
 	 * Whether the commit is hidden
 	 */
+	// eslint-disable-next-line no-unused-vars
 	isHide?: (this: ICommit) => boolean;
 	/**
 	 * Convects date in unixtime
 	 */
+	// eslint-disable-next-line no-unused-vars
 	toUnixTime?: (this: ICommit) => number;
 }

@@ -13,6 +13,7 @@ const hideSymbols = ['▌', '▆', '▄', '▅', '▍', '▋', '▇', '█'];
 
 const customFunctions: CustomFunctions = {
 	isHide(): boolean {
+		/* eslint-disable-next-line */
 		for (const symbol of hideSymbols) {
 			if (this.message.indexOf(symbol) > -1) return true;
 		}

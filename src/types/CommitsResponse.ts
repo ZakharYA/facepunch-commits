@@ -7,6 +7,7 @@
 /**
  * Module dependencies.
  */
+
 import { CustomFunctions } from './customFunctions';
 
 export interface ICommit extends CustomFunctions {
@@ -49,9 +50,11 @@ export interface ICommit extends CustomFunctions {
 	};
 }
 
-export default interface CommitsResponse {
+interface CommitsResponse {
 	total: number;
 	skip: number;
 	take: number;
 	results: ICommit[];
 }
+
+export default CommitsResponse;
