@@ -16,7 +16,9 @@ describe('check method class in commit', () => {
 
 	it('check working to unixtime', (done) => {
 		commits.getCommitById(commitId)
-			.then((commit) => done(commit.toUnixTime === 1626385501 ? undefined : new Error('unixtime invalid')));
+			.then((commit) => done(new Date(commit.toUnixTime).toString() !== 'Invalid Date' ?
+				undefined:
+				new Error('unixtime invalid')));
 
 		commits.catchRequest((err) => done(err));
 	});
