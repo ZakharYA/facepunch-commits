@@ -1,6 +1,6 @@
 {
 	"name": "facepunch-commits",
-	"version": "3.1.0",
+	"version": "3.2.0",
 	"description": "parser commits from commits.facepunch.com",
 	"main": "dist/index.js",
 	"repository": {
@@ -10,7 +10,7 @@
 	"scripts": {
 		"build": "tsc",
 		"tslint": "tslint --project tsconfig.json",
-		"test": "mocha test/**/*.js --timeout 10000 --exit",
+		"test": "cross-env TS_NODE_PROJECT=\"tsconfig.testing.json\" mocha -r ts-node/register test/**/*.ts --timeout 10000 --exit",
 		"validator": "npx typescript-json-validator src/types/CommitsResponse.ts"
 	},
 	"homepage": "https://github.com/ZakharYA/facepunch-commits.git",
@@ -21,14 +21,17 @@
 	"types": "dist/index.d.ts",
 	"license": "MIT",
 	"devDependencies": {
+		"@types/jest": "^26.0.24",
 		"@types/node": "^14.14.10",
 		"@types/node-fetch": "^2.5.7",
 		"@typescript-eslint/eslint-plugin": "^4.24.0",
 		"@typescript-eslint/parser": "^4.24.0",
+		"cross-env": "^7.0.3",
 		"eslint": "^7.2.0",
 		"eslint-config-airbnb": "^18.2.1",
 		"eslint-plugin-import": "^2.22.1",
 		"mocha": "^8.2.1",
+		"ts-node": "^10.1.0",
 		"typescript": "^4.1.2"
 	},
 	"dependencies": {

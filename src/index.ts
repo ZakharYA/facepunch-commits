@@ -1,58 +1,37 @@
-/*!
- * facepunch-commits
- * Copyright(c) 2021 Zakhar
- * MIT Licensed
- */
-
-/**
- * Module dependencies.
- */
-import nodeFetch from 'node-fetch';
-import CommitsResponseValidator, { CommitsResponse } from './types/CommitsResponse.validator';
+import fetch from 'node-fetch';
+import CommitsResponseValidator from './types/CommitsResponse.validator';
 import { ICommit } from './types/CommitsResponse';
-import customFunctions from './customFunctions';
-
-const fetch = nodeFetch;
+import { Commit } from './structures/Commit';
+import { CallbackCommit, CallbackError, FOptions } from './types/type';
 
 class FacepunchCommits {
-	options: {
-		interval: number,
-		intervalError: number,
-		url: string,
-	};
-
-	latestCommit: {
+	public options: FOptions & { url: string };
+	public latestCommit: {
 		[key: string]: number;
 	};
 
-	// eslint-disable-next-line no-unused-vars
-	errorHandler: ((error: Error) => void) | undefined;
+	private errorHandler?: ((error: Error) => void);
 
-	hasError: boolean;
+	private hasError: boolean;
 
 	/**
-	 * @param interval - how often new commits will be checked
-	 * (milliseconds)(Default 1 min)
-	 * @param intervalError -
-	 * How many times will the request be in case of an err
-	 * (milliseconds)(Default 5 min)
+	 * @param {Partial<FOptions>} options - set params chcek commits
 	 */
-	constructor(interval?: number, intervalError?: number) {
-		this.options = {
-			interval: interval || 60000,
-			intervalError: intervalError || 60000 * 5,
+	constructor(options?: Partial<FOptions>) {
+		const defaultOptions: FOptions & { url: string } = {
+			interval: 6e4,
+			intervalError: 5 * 6e4,
 			url: 'https://commits.facepunch.com/',
 		};
+
+		this.options = { ...defaultOptions, ...options };
 
 		this.latestCommit = {};
 		this.errorHandler = undefined;
 		this.hasError = false;
 	}
 
-	/**
-	 * @param params - Advanced Options in url
-	 */
-	async sendRequest(params: string): Promise<CommitsResponse['results']> {
+	private async sendRequest(params: string): Promise<ICommit[]> {
 		return fetch(`${this.options.url}${params}?format=json`)
 			.then((response) => {
 				if (!response.ok) throw response.text();
@@ -82,74 +61,69 @@ class FacepunchCommits {
 			});
 	}
 
-	/**
-	 * Subscribes to the url and calls callback function
-	 * @param params - Advanced Options in url
-	 * @param callback - return commit
-	 */
-	// eslint-disable-next-line no-unused-vars
-	subscribe(params: string, callback: (commit: ICommit) => void): void {
+	private subscribe(params: string, callback: CallbackCommit): void {
+		const sendRequest = () => {
+			this.sendRequest(params)
+				.then((result) => {
+					if (!(result && result.length > 0)) return;
+
+					const startCommit = (result[0] as ICommit);
+
+					if (!(params in this.latestCommit)) {
+						this.latestCommit[params] = startCommit.id;
+						return;
+					}
+
+					if (startCommit.id === this.latestCommit[params]) return;
+
+					const data: Commit[] = [];
+
+					for (const commit of result) {
+						if (commit.id === this.latestCommit[params]) break;
+
+						data.push(new Commit(commit));
+					}
+
+					this.latestCommit[params] = startCommit.id;
+
+					data.reverse();
+					data.map((e) => callback(e));
+				});
+		};
+
 		setInterval(() => {
 			if (this.hasError) return;
 
-			setTimeout(() => {
-				this.sendRequest(params)
-					.then((result) => {
-						if (!result) return;
-
-						if (!(params in this.latestCommit)) {
-							this.latestCommit[params] = result[0].id;
-							return;
-						}
-
-						if (result[0].id === this.latestCommit[params]) return;
-
-						const data: ICommit[] = [];
-
-						// eslint-disable-next-line no-restricted-syntax
-						for (const commit of result) {
-							if (commit.id === this.latestCommit[params]) break;
-
-							Object.values(customFunctions).forEach((value) => {
-								Object.defineProperty(commit, value.name, { get: () => value });
-							});
-
-							data.push(commit);
-						}
-
-						this.latestCommit[params] = result[0].id;
-
-						data.reverse();
-						data.map((e) => callback(e));
-					});
-			}, 1000);
+			setTimeout(sendRequest, 1000);
 		}, this.options.interval);
 	}
 
 	/**
-	 * Subscribes to the commits of a specific repository
-	 * @param name repository to subscribe
-	 * @param callback callback how to return new commit
+	 * get commit from id
+	 * @param {number} id - id commit
 	 */
-	subscribeToRepository(
-		name: string,
-		// eslint-disable-next-line no-unused-vars
-		callback: (commit: ICommit) => void,
-	): void {
+	public getCommitById = async (id: number): Promise<Commit> => {
+		const commits = await this.sendRequest(`${id}`);
+		return new Commit((commits[0] as ICommit));
+	}
+
+	/**
+	 * Subscribes to the commits of a specific repository
+	 * @param {string} name repository to subscribe
+	 * @param {CallbackCommit} callback callback how to return new commit
+	 */
+	public subscribeToRepository(name: string, callback: CallbackCommit): void {
 		this.subscribe(`r/${name}`, callback);
 	}
 
 	/**
 	 * Subscribes to the communes of a specific author
-	 * @param authorName author to subscribe
-	 * @param  callback how to return new commit
+	 * @param {string} authorName author to subscribe
+	 * @param {CallbackCommit} callback how to return new commit
 	 */
-	subscribeToAuthor(
-		authorName: string,
-		// eslint-disable-next-line no-unused-vars
-		callback: (commit: ICommit) => void,
-	): void {
-		this.subscribe(authorName, callback);
+	public subscribeToAuthor(authorName: string, callback: CallbackCommit): void {
+		const authorNameReplaced = authorName.replace(/\s/g, '');
+		this.subscribe(authorNameReplaced, callback);
 	}
 
 	/**
@@ -158,36 +132,36 @@ class FacepunchCommits {
 	 * authorName = billford
 	 * repositoryName = rust_reboot
 	 * https://commits.facepunch.com/billford/rust_reboot
-	 * @param authorName author to subscribe
-	 * @param repositoryName repository to subscribe
-	 * @param callback how to return new commit
+	 * @param {string} authorName author to subscribe
+	 * @param {string} repositoryName repository to subscribe
+	 * @param {CallbackCommit} callback how to return new commit
 	 */
-	subscribeToAuthorRepository(
-		authorName: string,
-		repositoryName: string,
-		// eslint-disable-next-line no-unused-vars
-		callback: (commit: ICommit) => void,
-	): void {
+	public subscribeToAuthorRepository(authorName: string, repositoryName: string, callback: CallbackCommit): void {
 		const authorNameReplaced = authorName.replace(/\s/g, '');
 		this.subscribe(`${authorNameReplaced}/${repositoryName}`, callback);
 	}
 
 	/**
 	 * Subscribe to all commits
-	 * @param callback how to return new commit
+	 * @param {CallbackCommit} callback how to return new commit
 	 */
-	// eslint-disable-next-line no-unused-vars
-	subscribeToAll(callback: (commit: ICommit) => void): void {
+	public subscribeToAll(callback: CallbackCommit): void {
 		this.subscribe('', callback);
 	}
 
 	/**
 	 * Calls callback function in case of error when receiving a commit
-	 * @param callback - A mistake will arrive here
+	 * @param {CallbackError} callback - A mistake will arrive here
 	 */
-	// eslint-disable-next-line no-unused-vars
-	catchRequest(callback: (error: Error) => void): void {
+	public catchRequest(callback: CallbackError): void {
 		this.errorHandler = callback;
+	}
+
+	/**
+	 * special for mocha test
+	 */
+	public testNullifyCommit = (params: string): void => {
+		this.latestCommit[params] = 0;
 	}
 }
 

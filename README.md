@@ -1,8 +1,8 @@
 <h1 align="center">Watch facepunch commits</h1>
 
 <h2 align="center">
-    <a href="commits.facepunch.com">
-        <img width="134" src="https://commits.facepunch.com/logo.svg">
+    <a href="https://commits.facepunch.com">
+        <img width="134" src="https://commits.facepunch.com/logo.svg" alt="Facepunch logo">
     </a>
 </h2>
 
@@ -10,7 +10,6 @@ This library allows you to track the commits from the [facepunch site](https://c
 
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][downloads-url]
-[![Build][travis-image]][travis-url]
 [![Node CI][github-actions-node-ci]][github-actions-node-ci-url]
 [![NPM Publish][github-actions-npm-publish]][github-actions-npm-publish-url]
 
@@ -35,29 +34,29 @@ $ npm i facepunch-commits
 ```js
 subscribeToAuthor(name, callback)
 ```
-
+* **Description:** The function that will be called with the new commit.
 * **Key:** `name`
     * **Type:** String.
     * **Description:** Name of the author to subscribe to.
 * **Key:** `callback`
     * **Type:** Function.
-    * **Description:** The function that will be called with the new commit.
+	* **Return:** `Commit`
 
 ```js
 subscribeToRepository(name, callback)
 ```
-
+* **Description:** The function that will be called with the new commit.
 * **Key:** `name`
     * **Type:** String.
     * **Description:** Name of the repository to subscribe to.
 * **Key:** `callback`
     * **Type:** Function.
-    * **Description:** The function that will be called with the new commit.
+    * **Return:** `Commit`
 
 ```js
 subscribeToAuthorRepository(authorName, repositoryName, callback)
 ```
-
+* **Description:** The function that will be called with the new commit.
 * **Key:** `authorName`
     * **Type:** String.
     * **Description:** Name of the author to subscribe to.
@@ -66,56 +65,111 @@ subscribeToAuthorRepository(authorName, repositoryName, callback)
     * **Description:** Name of the repository to subscribe to.
 * **Key:** `callback`
     * **Type:** Function.
-    * **Description:** The function that will be called with the new commit.
+    * **Return** `Commit`
 
 ```js
 subscribeToAll(callback)
 ```
-
+* **Description:** The function that will be called with the new commit.
 * **Key:** `callback`
     * **Type:** Function.
-    * **Description:** The function that will be called with the new commit.
+	* **Return:** `Commit`
 
 ```js
 catchRequest(callback)
 ```
-
+* **Description:** Called when a request has occurred. Return error
 * **Key:** `callback`
     * **Type:** Function.
-    * **Description:** Called when a request has occurred. Return error
+	* **Return:** `Error`
+
+```js
+getCommitById(id)
+```
+* **Description:** Get commit by id.
+* **Key:** `id`
+	* **Type:** Function.
+	* **Return:** Promise `Commit`.
 
 ## Callback also has additional features
 
 ```js
-isHide()
+commit.isHide
 ```
 
 * **Type:** Function.
     * **Description:** Checks whether the switch is hidden. (blues with symbols)
     * **Return:** boolean
+	
+```js
+commit.toUnixTime
+```
+* **Type:** Function.
+	* **Description:** Convects date in unixtime
+	* **Return:** number
 
 ```js
-toUnixTime()
+commit.urlCommit
 ```
-
 * **Type:** Function.
-    * **Description:** Convects date in unixtime
-    * **Return:** number
+	* **Description:** Get url link commit
+	* **Return:** string
 
-## Example return in callback function
+```js
+commit.username
+```
+* **Type:** Function.
+	* **Description:** Get username author commit
+	* **Return:** string
 
-```json
-{
-      "id": 372193,
-      "repo": "rust_reboot",
-      "branch": "main/ai_test_changes/events",
-      "changeset": "54530",
-      "created": "2020-09-12T10:44:02",
-      "message": "wip AI state events & listener.",
-      "user": {
-        "name": "Adam Woolridge",
-        "avatar": "https://files.facepunch.com/s/b8ec968c721a.jpg"
-      }
+```js
+commit.avatar
+```
+* **Type:** Function.
+	* **Description:** Get avatar author commit
+	* **Return:** string
+
+## Example return in callback function (commit)
+
+```typescript
+interface Commit {
+	/**
+	 * unique id commit
+	 */
+	id: number;
+	/**
+	 * name repository
+	 */
+	repo: string;
+	/**
+	 * name branch
+	 */
+	branch: string;
+	/**
+	 * changeset id
+	 */
+	changeset: string;
+	/**
+	 * date created fixation commit
+	 */
+	created: string;
+	/**
+	 * commit message
+	 */
+	message: string;
+	/**
+	 * user info commit
+	 */
+	user: {
+		/**
+		 * name author commit
+		 */
+		name: string;
+		/**
+		 * avatar author commit
+		 */
+		avatar: string
+	};
 }
 ```
 
@@ -124,7 +178,9 @@ toUnixTime()
 ```js
 const FacepunchCommits = require('facepunch-commits');
 
-const commits = new FacepunchCommits(15000); // interval check commits in ms
+const commits = new FacepunchCommits({ 
+	interval: 15000 // interval check commits in ms
+});
 
 commits.subscribeToAuthor('Garry Newman', (commit) => {
 	// Here we subscribe to commits from author Garry Newman
@@ -147,6 +203,13 @@ commits.subscribeToAll((commit) => {
 commits.catchRequest((err) => {
 	console.log('new error', err);
 })
+
+(() => {
+	commits.getCommitById(1)
+		.then((commit) => {
+			console.log('Get commit', commit);
+		})
+})();
 ```
 
 ## Running test
@@ -181,10 +244,6 @@ Author [Zakhar Yaitskih](https://github.com/ZakharYA)
 [downloads-image]: https://img.shields.io/npm/dm/facepunch-commits
 
 [downloads-url]: https://npmcharts.com/compare/facepunch-commits?minimal=true
-
-[travis-image]: https://travis-ci.com/ZakharYA/facepunch-commits.svg?branch=master
-
-[travis-url]: https://travis-ci.com/ZakharYA/facepunch-commits
 
 [github-actions-node-ci]: https://github.com/ZakharYA/facepunch-commits/actions/workflows/test.yml/badge.svg
 
