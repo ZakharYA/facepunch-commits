@@ -10,8 +10,7 @@
 	"extends": [
 		"eslint:recommended",
 		"plugin:@typescript-eslint/eslint-recommended",
-		"plugin:@typescript-eslint/recommended",
-		"airbnb"
+		"plugin:@typescript-eslint/recommended"
 	],
 	"parserOptions": {
 		"ecmaVersion": 2016,
@@ -21,7 +20,8 @@
 		"indent": ["error", "tab"],
 		"max-len": ["error", { "code": 120, "ignorePattern": "^import\\s.+\\sfrom\\s.+;$" }],
 		"no-tabs": 0,
-		"import/extensions": "off"
+		"import/extensions": "off",
+		"semi": [2, "always"]
 	},
 	"settings": {
 		"import/resolver": {
