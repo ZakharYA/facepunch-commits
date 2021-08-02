@@ -21,7 +21,8 @@
 		"max-len": ["error", { "code": 120, "ignorePattern": "^import\\s.+\\sfrom\\s.+;$" }],
 		"no-tabs": 0,
 		"import/extensions": "off",
-		"semi": [2, "always"]
+		"semi": [2, "always"],
+		"require-await": "error"
 	},
 	"settings": {
 		"import/resolver": {

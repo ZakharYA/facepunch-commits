@@ -156,13 +156,6 @@ class FacepunchCommits {
 	public catchRequest(callback: CallbackError): void {
 		this.errorHandler = callback;
 	}
-
-	/**
-	 * special for mocha test
-	 */
-	public testNullifyCommit = (params: string): void => {
-		this.latestCommit[params] = 0;
-	}
 }
 
 export = FacepunchCommits;
