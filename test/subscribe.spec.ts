@@ -82,7 +82,8 @@ describe('check subscribe', () => {
 	it('check get commit id', (done) => {
 		const commitId = 387280;
 		commits.getCommitById(commitId)
-			.then((commit) => done(commit.id === commitId ? undefined : new Error('commit id invalid')));
+			.then((commit) => done(commit.id === commitId ? undefined : new Error('commit id invalid')))
+			.catch((err) => done(err));
 
 		commits.catchRequest((err) => done(err));
 	});
