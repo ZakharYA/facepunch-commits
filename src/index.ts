@@ -104,7 +104,8 @@ class FacepunchCommits {
 	 */
 	public getCommitById = async (id: number): Promise<Commit> => {
 		const commits = await this.sendRequest(`${id}`);
-		return new Commit((commits[0] as ICommit));
+		if (!commits[0]) throw new Error('commit not found.');
+		return new Commit(commits[0]);
 	}
 
 	/**

@@ -9,7 +9,8 @@ const commitId = 387280;
 describe('check method class in commit', () => {
 	it('check working is hide', (done) => {
 		commits.getCommitById(commitId)
-			.then((commit) => done(commit.isHide ? undefined : new Error('commit is not hide')));
+			.then((commit) => done(commit.isHide ? undefined : new Error('commit is not hide')))
+			.catch((err) => done(err));
 
 		commits.catchRequest((err) => done(err));
 	});
@@ -18,7 +19,8 @@ describe('check method class in commit', () => {
 		commits.getCommitById(commitId)
 			.then((commit) => done(new Date(commit.toUnixTime).toString() !== 'Invalid Date' ?
 				undefined:
-				new Error('unixtime invalid')));
+				new Error('unixtime invalid')))
+			.catch((err) => done(err));
 
 		commits.catchRequest((err) => done(err));
 	});
