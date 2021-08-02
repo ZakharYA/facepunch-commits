@@ -4,9 +4,13 @@ const commits = new FacepunchCommits({
 	interval: 1000
 });
 
+const nullifyCommit = (commit: string): void => {
+	commits.latestCommit[commit] = 0;
+}
+
 describe('check subscribe', () => {
 	it('subscribes to the all commit and waits for the commit', (done) => {
-		commits.testNullifyCommit('');
+		nullifyCommit('');
 		let called = false;
 
 		commits.subscribeToAll(() => {
@@ -22,7 +26,7 @@ describe('check subscribe', () => {
 	it('check subscribe to repository', (done) => {
 		const repositoryTest = 'sbox';
 
-		commits.testNullifyCommit(`r/${repositoryTest}`);
+		nullifyCommit(`r/${repositoryTest}`);
 
 		let called = false;
 
@@ -39,7 +43,7 @@ describe('check subscribe', () => {
 	it('check subscribe to author', (done) => {
 		const authorTest = 'Garry Newman';
 
-		commits.testNullifyCommit(authorTest.replace(/\s/g, ''));
+		nullifyCommit(authorTest.replace(/\s/g, ''));
 
 		let called = false;
 
@@ -58,7 +62,7 @@ describe('check subscribe', () => {
 		const authorName = 'Garry Newman';
 		const authorRepository = 'sbox';
 
-		commits.testNullifyCommit(`${authorName.replace(/\s/g, '')}/${authorRepository}`);
+		nullifyCommit(`${authorName.replace(/\s/g, '')}/${authorRepository}`);
 
 		let called = false;
 
