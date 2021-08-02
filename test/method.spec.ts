@@ -22,31 +22,4 @@ describe('check method class in commit', () => {
 
 		commits.catchRequest((err) => done(err));
 	});
-
-	it('check get link commit', (done) => {
-		commits.getCommitById(commitId)
-			.then((commit) => done(
-				commit.urlCommit === `https://commits.facepunch.com/${commitId}` ?
-					undefined :
-					new Error('invalid url')
-			));
-
-		commits.catchRequest((err) => done(err));
-	});
-
-	it('check username', (done) => {
-		commits.getCommitById(commitId)
-			.then((commit) => done(commit.username === `Jarryd Campi` ? undefined : new Error('invalid username')));
-
-		commits.catchRequest((err) => done(err));
-	});
-
-	it ('check get avatar', (done) => {
-		commits.getCommitById(commitId)
-			.then((commit) => done(commit.avatar === `https://files.facepunch.com/s/d6ae6ff5cf70.jpg` ?
-				undefined :
-				new Error('invalid avatar')));
-
-		commits.catchRequest((err) => done(err));
-	});
 });
