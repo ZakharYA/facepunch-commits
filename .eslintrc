@@ -30,5 +30,6 @@
 				"extensions": [".js", ".jsx", ".ts", ".tsx"]
 			}
 		}
-	}
+	},
+	"ignorePatterns": ["src/types/CommitsResponse.validator.ts"]
 }
