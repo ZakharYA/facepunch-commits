@@ -1,8 +1,8 @@
-import fetch from 'node-fetch';
 import CommitsResponseValidator from './types/CommitsResponse.validator';
 import { ICommit } from './types/CommitsResponse';
 import { Commit } from './structures/Commit';
 import { CallbackCommit, CallbackError, FOptions } from './types/type';
+import { request } from 'undici';
 
 class FacepunchCommits {
 	public options: FOptions & { url: string };
@@ -31,11 +31,12 @@ class FacepunchCommits {
 		this.hasError = false;
 	}
 
-	private async sendRequest(params: string): Promise<ICommit[]> {
-		return fetch(`${this.options.url}${params}?format=json`)
-			.then((response) => {
-				if (!response.ok) throw response.text();
-				return response.json();
+	private sendRequest(params: string): Promise<ICommit[]> {
+		return request(`${this.options.url}${params}?format=json`)
+			.then(async (response) => {
+				if (response.statusCode !== 200) throw await response.body.text();
+
+				return response.body.json();
 			})
 			.then((result) => {
 				if (!('results' in result)) throw new Error(result);
@@ -106,7 +107,7 @@ class FacepunchCommits {
 		const commits = await this.sendRequest(`${id}`);
 		if (!commits[0]) throw new Error('commit not found.');
 		return new Commit(commits[0]);
-	}
+	};
 
 	/**
 	 * Subscribes to the commits of a specific repository
