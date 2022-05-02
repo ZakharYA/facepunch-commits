@@ -33,7 +33,7 @@
 		"typescript": "^4.3.5"
 	},
 	"dependencies": {
-		"ajv": "^6.12.6",
+		"ajv": "^7.2.4",
 		"undici": "^5.0.0"
 	},
 	"keywords": [
