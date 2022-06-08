@@ -1,6 +1,6 @@
 {
 	"name": "facepunch-commits",
-	"version": "3.4.0",
+	"version": "3.4.1",
 	"description": "parser commits from commits.facepunch.com",
 	"main": "dist/index.js",
 	"repository": {
@@ -44,6 +44,6 @@
 		"js"
 	],
 	"engines": {
-		"node": ">= 0.10.0"
+		"node": ">= 12.0.0"
 	}
 }
