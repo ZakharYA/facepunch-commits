@@ -15,7 +15,7 @@ class FacepunchCommits {
 	private hasError: boolean;
 
 	/**
-	 * @param {Partial<FOptions>} options - set params chcek commits
+	 * @param {Partial<FOptions>} options - set params check commits
 	 */
 	constructor(options?: Partial<FOptions>) {
 		const defaultOptions: FOptions & { url: string } = {
