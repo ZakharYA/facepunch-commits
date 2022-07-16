@@ -21,7 +21,7 @@
 	"types": "dist/index.d.ts",
 	"license": "MIT",
 	"devDependencies": {
-		"@types/jest": "28.1.1",
+		"@types/jest": "28.1.6",
 		"@types/node": "18.0.5",
 		"@typescript-eslint/eslint-plugin": "5.30.6",
 		"@typescript-eslint/parser": "5.30.6",
