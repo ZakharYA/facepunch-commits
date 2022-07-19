@@ -12,6 +12,7 @@ This library allows you to track the commits from the [facepunch site](https://c
 [![NPM Downloads][downloads-image]][downloads-url]
 [![Node CI][github-actions-node-ci]][github-actions-node-ci-url]
 [![NPM Publish][github-actions-npm-publish]][github-actions-npm-publish-url]
+[![CodeQL](https://github.com/ZakharYA/facepunch-commits/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/ZakharYA/facepunch-commits/actions/workflows/codeql-analysis.yml)
 
 ## Installation
 
