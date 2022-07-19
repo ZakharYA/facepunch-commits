@@ -92,9 +92,22 @@ getCommitById(id)
 	* **Return:** Promise `Commit`.
 
 ## Callback also has additional features
-
 ```js
-commit.isHide
+commit.getLikes()
+```
+
+* **Type:** Function.
+    * **Description:** Get likes and dislikes in commit
+    * **Return:** Object
+    ```js
+      {
+      	likes: <Number>
+      	dislikes: <Number>
+      }
+    ```
+ 
+```js
+commit.isHide()
 ```
 
 * **Type:** Function.
@@ -102,7 +115,7 @@ commit.isHide
     * **Return:** boolean
 	
 ```js
-commit.toUnixTime
+commit.toUnixTime()
 ```
 * **Type:** Function.
 	* **Description:** Convects date in unixtime
@@ -205,9 +218,13 @@ commits.catchRequest((err) => {
 })
 
 (() => {
-	commits.getCommitById(1)
-		.then((commit) => {
+	commits.getCommitById(387280)
+		.then(async (commit) => {
 			console.log('Get commit', commit);
+			
+			const {likes, dislikes} = await commit.getLikes();
+			console.log('likes:', likes);
+			console.log('dislikes:', dislikes);
 		})
 })();
 ```
@@ -229,7 +246,7 @@ npm run build
 # create pull request
 ```
 
-## People
+## Members
 
 Author [Zakhar Yaitskih](https://github.com/ZakharYA)
 
