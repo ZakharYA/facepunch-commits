@@ -261,17 +261,6 @@ $ npm run validator
 $ npm test
 ```
 
-## For developers (suggest an idea)
-### Usage
-```shell
-git clone https://github.com/ZakharYA/facepunch-commits.git
-npm i
-# code...
-npm run validator
-npm run build
-# create pull request
-```
-
 ## Members
 
 Author [Zakhar Yaitskih](https://github.com/ZakharYA)
