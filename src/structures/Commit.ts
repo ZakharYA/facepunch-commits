@@ -1,6 +1,8 @@
 import { ICommit } from '../types/CommitsResponse';
+import { request } from 'undici';
 
 const hideSymbols = ['▌', '▆', '▄', '▅', '▍', '▋', '▇', '█'];
+const likeCountRegex = /div class="like-button (?:has-likes|no-likes)" like-type="[01]"(?:.*)?<span>(\d+)<\/span>/g;
 
 export class Commit implements ICommit {
 	/**
@@ -54,15 +56,37 @@ export class Commit implements ICommit {
 	/**
 	 * Checks if the commit message is hidden
 	 */
-	public get isHide(): boolean {
+	public isHide(): boolean {
 		return hideSymbols.some((element) => this.message.includes(element));
 	}
 
 	/**
 	 * convert date(created) to unixtime
 	 */
-	public get toUnixTime(): number {
+	public toUnixTime(): number {
 		return new Date(this.created).getTime() / 1000;
+	}
+
+	/**
+	 * get likes and dislikes in commit
+	 */
+	public getLikes(): Promise<{likes: number, dislikes: number}> {
+		return request(this.urlCommit)
+			.then(async (response) => {
+				if (response.statusCode !== 200) throw await response.body.text();
+
+				return response.body.text();
+			})
+			.then((result) => {
+				const matches = Array.from(result.matchAll(likeCountRegex)).map((match) => match[1]);
+				if (matches.length < 2) {
+					throw new Error('bad parse like');
+				}
+				return {
+					likes: Number(matches[0]),
+					dislikes: Number(matches[1])
+				};
+			});
 	}
 
 	/**
