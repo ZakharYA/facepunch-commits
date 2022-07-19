@@ -122,6 +122,18 @@ commit.toUnixTime()
 	* **Return:** number
 
 ```js
+commit.likes
+```
+* **Type:** Number | Null
+    * **Description:** count likes in commit (if you called function getLikes())
+
+```js
+commit.dislikes
+```
+* **Type:** Number | Null
+	* **Description:** count dislikes in commit (if you called function getLikes())
+
+```js
 commit.urlCommit
 ```
 * **Type:** Function.
@@ -225,6 +237,11 @@ commits.catchRequest((err) => {
 			const {likes, dislikes} = await commit.getLikes();
 			console.log('likes:', likes);
 			console.log('dislikes:', dislikes);
+			
+			// or
+			await commit.getLikes();
+			console.log('likes:', commit.likes);
+			console.log('dislikes:', commit.dislikes);
 		})
 })();
 ```

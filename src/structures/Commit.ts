@@ -43,6 +43,9 @@ export class Commit implements ICommit {
 		avatar: string
 	};
 
+	likes: number|null;
+	dislikes: number|null;
+
 	constructor(commitsParams: ICommit) {
 		this.branch = commitsParams.branch;
 		this.changeset = commitsParams.changeset;
@@ -51,6 +54,9 @@ export class Commit implements ICommit {
 		this.message = commitsParams.message;
 		this.repo = commitsParams.repo;
 		this.user = commitsParams.user;
+
+		this.likes = null;
+		this.dislikes = null;
 	}
 
 	/**
@@ -82,9 +88,12 @@ export class Commit implements ICommit {
 				if (matches.length < 2) {
 					throw new Error('bad parse like');
 				}
+
+				this.likes = Number(matches[0]);
+				this.dislikes = Number(matches[1]);
 				return {
-					likes: Number(matches[0]),
-					dislikes: Number(matches[1])
+					likes: this.likes,
+					dislikes: this.dislikes
 				};
 			});
 	}
