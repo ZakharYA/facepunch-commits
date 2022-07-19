@@ -31,5 +31,5 @@
 			}
 		}
 	},
-	"ignorePatterns": ["src/types/CommitsResponse.validator.ts"]
+	"ignorePatterns": ["src/types/CommitsResponse.validator.ts", "dist/**"]
 }
