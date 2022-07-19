@@ -10,7 +10,12 @@ export interface FOptions {
 	 * how many times will the request be in case of an err
 	 * default 5 min
 	 * */
-	intervalError: number
+	intervalError: number,
+
+	/**
+	 * auto call function getLikes in class Commit
+	 */
+	autoGetLikes: boolean,
 }
 
 export type CallbackCommit = (commit: Commit) => void;

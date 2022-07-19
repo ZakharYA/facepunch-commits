@@ -1,16 +1,20 @@
 import FacepunchCommits from '../src/index';
 
-const commits = new FacepunchCommits({
-	interval: 1000
-});
 
-const nullifyCommit = (commit: string): void => {
-	commits.latestCommit[commit] = 0;
+const getClass = (): FacepunchCommits => {
+	return new FacepunchCommits({
+		interval: 1000
+	});
+};
+
+const nullifyCommit = (fClass: FacepunchCommits, commit: string): void => {
+	fClass.latestCommit[commit] = 0;
 };
 
 describe('check subscribe', () => {
 	it('subscribes to the all commit and waits for the commit', (done) => {
-		nullifyCommit('');
+		const commits = getClass();
+		nullifyCommit(commits, '');
 		let called = false;
 
 		commits.subscribeToAll(() => {
@@ -24,9 +28,10 @@ describe('check subscribe', () => {
 	});
 
 	it('check subscribe to repository', (done) => {
+		const commits = getClass();
 		const repositoryTest = 'sbox';
 
-		nullifyCommit(`r/${repositoryTest}`);
+		nullifyCommit(commits, `r/${repositoryTest}`);
 
 		let called = false;
 
@@ -41,9 +46,10 @@ describe('check subscribe', () => {
 	});
 
 	it('check subscribe to author', (done) => {
+		const commits = getClass();
 		const authorTest = 'Garry Newman';
 
-		nullifyCommit(authorTest.replace(/\s/g, ''));
+		nullifyCommit(commits, authorTest.replace(/\s/g, ''));
 
 		let called = false;
 
@@ -59,10 +65,11 @@ describe('check subscribe', () => {
 	});
 
 	it('check subscribe to author repository', (done) => {
+		const commits = getClass();
 		const authorName = 'Garry Newman';
 		const authorRepository = 'sbox';
 
-		nullifyCommit(`${authorName.replace(/\s/g, '')}/${authorRepository}`);
+		nullifyCommit(commits, `${authorName.replace(/\s/g, '')}/${authorRepository}`);
 
 		let called = false;
 
@@ -80,11 +87,35 @@ describe('check subscribe', () => {
 	});
 
 	it('check get commit id', (done) => {
+		const commits = getClass();
 		const commitId = 387280;
 		commits.getCommitById(commitId)
 			.then((commit) => done(commit.id === commitId ? undefined : new Error('commit id invalid')))
 			.catch((err) => done(err));
 
 		commits.catchRequest((err) => done(err));
+	});
+
+	it('subscribes to the all commit and check passed auto likes', (done) => {
+		const commits = getClass();
+		nullifyCommit(commits, '');
+
+		let called = false;
+		commits.options.autoGetLikes = true;
+
+		commits.subscribeToAll((commit) => {
+			if (called) return;
+			called = true;
+			commits.options.autoGetLikes = false;
+
+			done(typeof commit.likes === 'number' && typeof commit.dislikes === 'number' ?
+				undefined:
+				new Error('bad auto get likes in subscribe to all'));
+		});
+
+		commits.catchRequest((err) => {
+			commits.options.autoGetLikes = false;
+			done(err);
+		});
 	});
 });

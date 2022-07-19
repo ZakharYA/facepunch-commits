@@ -22,6 +22,7 @@ class FacepunchCommits {
 			interval: 6e4,
 			intervalError: 5 * 6e4,
 			url: 'https://commits.facepunch.com/',
+			autoGetLikes: false,
 		};
 
 		this.options = { ...defaultOptions, ...options };
@@ -82,7 +83,15 @@ class FacepunchCommits {
 					for (const commit of result) {
 						if (commit.id === this.latestCommit[params]) break;
 
-						data.push(new Commit(commit));
+						if (this.options.autoGetLikes) {
+							const commitData = new Commit(commit);
+							commitData.getLikes()
+								.then(() => {
+									callback(commitData);
+								});
+						} else {
+							data.push(new Commit(commit));
+						}
 					}
 
 					this.latestCommit[params] = startCommit.id;
@@ -106,7 +115,14 @@ class FacepunchCommits {
 	public getCommitById = async (id: number): Promise<Commit> => {
 		const commits = await this.sendRequest(`${id}`);
 		if (!commits[0]) throw new Error('commit not found.');
-		return new Commit(commits[0]);
+
+		if (this.options.autoGetLikes) {
+			const commitData = new Commit(commits[0]);
+			await commitData.getLikes();
+			return commitData;
+		} else {
+			return new Commit(commits[0]);
+		}
 	};
 
 	/**

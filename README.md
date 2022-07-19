@@ -243,6 +243,15 @@ commits.catchRequest((err) => {
 			console.log('likes:', commit.likes);
 			console.log('dislikes:', commit.dislikes);
 		})
+		
+	// or
+	commits.options.autoGetLikes = true;
+	commits.getCommitById(387280)
+		.then(async (commit) => {
+			console.log('Get commit', commit);
+			console.log('likes:', commit.likes);
+			console.log('dislikes:', commit.dislikes);
+		})
 })();
 ```
 
