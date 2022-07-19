@@ -6,7 +6,7 @@ const commits = new FacepunchCommits({
 
 const nullifyCommit = (commit: string): void => {
 	commits.latestCommit[commit] = 0;
-}
+};
 
 describe('check subscribe', () => {
 	it('subscribes to the all commit and waits for the commit', (done) => {
