@@ -102,8 +102,8 @@ commit.getLikes()
     * **Return:** Object
     ```js
       {
-      	likes: <Number>
-      	dislikes: <Number>
+      	likes: Number
+      	dislikes: Number
       }
     ```
  
@@ -114,7 +114,14 @@ commit.isHide()
 * **Type:** Function.
     * **Description:** Checks whether the switch is hidden. (blues with symbols)
     * **Return:** boolean
-	
+
+```js
+commit.getDate()
+```
+* **Type:** Function.
+    * **Description:** get Date commit in js format
+    * **Return:** Date
+
 ```js
 commit.toUnixTime()
 ```
