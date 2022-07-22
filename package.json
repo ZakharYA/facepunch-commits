@@ -1,6 +1,6 @@
 {
 	"name": "facepunch-commits",
-	"version": "3.6.3",
+	"version": "3.6.4",
 	"description": "parser commits from commits.facepunch.com",
 	"main": "dist/index.js",
 	"repository": {
@@ -21,19 +21,19 @@
 	"types": "dist/index.d.ts",
 	"license": "MIT",
 	"devDependencies": {
-		"@types/jest": "28.1.1",
-		"@types/node": "18.0.6",
-		"@typescript-eslint/eslint-plugin": "5.30.7",
-		"@typescript-eslint/parser": "5.30.7",
-		"cross-env": "7.0.3",
-		"eslint": "8.20.0",
-		"mocha": "10.0.0",
-		"ts-node": "10.9.1",
-		"typescript": "4.7.4"
+		"@types/jest": "^28.1.1",
+		"@types/node": "^18.0.6",
+		"@typescript-eslint/eslint-plugin": "^5.30.7",
+		"@typescript-eslint/parser": "^5.30.7",
+		"cross-env": "^7.0.3",
+		"eslint": "^8.20.0",
+		"mocha": "^10.0.0",
+		"ts-node": "^10.9.1",
+		"typescript": "^4.7.4"
 	},
 	"dependencies": {
 		"ajv": "6.12.6",
-		"undici": "5.8.0"
+		"undici": "^5.8.0"
 	},
 	"keywords": [
 		"facepunch",
