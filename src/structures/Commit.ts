@@ -67,10 +67,17 @@ export class Commit implements ICommit {
 	}
 
 	/**
+	 * get date created commit in format js
+	 */
+	public getDate(): Date {
+		return new Date(this.created);
+	}
+
+	/**
 	 * convert date(created) to unixtime
 	 */
 	public toUnixTime(): number {
-		return new Date(this.created).getTime() / 1000;
+		return this.getDate().getTime() / 1000;
 	}
 
 	/**

@@ -1,6 +1,6 @@
 {
 	"name": "facepunch-commits",
-	"version": "3.6.2",
+	"version": "3.6.3",
 	"description": "parser commits from commits.facepunch.com",
 	"main": "dist/index.js",
 	"repository": {
